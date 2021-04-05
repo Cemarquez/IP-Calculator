@@ -98,8 +98,6 @@ function calculate() {
         bcBinary += ipBin[i];
         net += parseInt(ipBin[i], 2);
         bc += parseInt(ipBin[i], 2);
-        rangeA += parseInt(ipBin[i], 2);
-        rangeB += parseInt(ipBin[i], 2);
       } else if (importantBlock == i) {
         //the important block.
         mask += maskBlock;
@@ -108,8 +106,6 @@ function calculate() {
         bcBinary += bcBlockBinary;
         net += parseInt(netBlockBinary, 2);
         bc += parseInt(bcBlockBinary, 2);
-        rangeA += parseInt(netBlockBinary, 2) + 1;
-        rangeB += parseInt(bcBlockBinary, 2) - 1;
       } else {
         //block after the important block.
         mask += 0;
@@ -118,8 +114,6 @@ function calculate() {
         bcBinary += "11111111";
         net += "0";
         bc += "255";
-        rangeA += 0;
-        rangeB += 255;
       }
       //add . separator except the last block
       if (i < 4) {
@@ -129,22 +123,104 @@ function calculate() {
         bcBinary += ".";
         net += ".";
         bc += ".";
-        rangeA += ".";
-        rangeB += ".";
       }
     }
+
+    rangeA = sumarIP(net);
+    rangeB = restarIP(bc);
+
+
+    //Numero de bits para encontrar los hosts
+    var numHost = 32 - cidr;
+    var canDirecciones = Math.pow(2, numHost) - 2;
     //write the results to the page.
     document.getElementById("resMask").innerHTML = mask;
-    document.getElementById("resNet").innerHTML = net;
     document.getElementById("resBC").innerHTML = bc;
     document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
-    document.getElementById("resBinIP").innerHTML =
-      ipBin[1] + "." + ipBin[2] + "." + ipBin[3] + "." + ipBin[4];
-    document.getElementById("resBinMask").innerHTML = maskBinary;
-    document.getElementById("resBinNet").innerHTML = netBinary;
-    document.getElementById("resBinBC").innerHTML = bcBinary;
-    document.getElementById("resClass").innerHTML = standartClass;
+    document.getElementById("resNet").innerHTML = net;
+    document.getElementById("resNumBitsHost").innerHTML = numHost;
+    document.getElementById("resNumBitsRed").innerHTML = cidr;
+    document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
+    
+    var ipAsignada=rangeA;
+    lista = document.getElementById("lista");
+      listado = document.createElement("LI");
+      ip = document.createTextNode(ipAsignada);
+      listado.appendChild(ip);
+      lista.appendChild(listado);
+
+    for(var i = canDirecciones; i>1;i--){
+      lista = document.getElementById("lista");
+      listado = document.createElement("LI");
+      ipAsignada = sumarIP(ipAsignada);
+      ip = document.createTextNode(ipAsignada);
+      listado.appendChild(ip);
+      lista.appendChild(listado);
+    }
+ 
+ 
   } else {
     alert("invalid value");
   }
 }
+
+function sumarIP(ip){
+  var bloques = ip.split(".");
+  var ipNueva= "";
+  var sumado=false
+  for(var i = 4; i>1;i--){
+    if(!sumado){
+      var bloqueActual = parseInt(bloques[i], 10);
+      if(bloqueActual<255){
+        bloqueActual+=1;
+        sumado = true;
+      }else{
+        bloqueActual = 0;
+      }
+      bloques[i] = bloqueActual;
+    }
+   
+  }
+
+  for(var i =0; i<bloques.length-1;i++){
+    if(i==bloques.length-2){
+      ipNueva += bloques[i] +"";
+    }else{
+      ipNueva += bloques[i] +".";
+    }
+  }
+
+  return ipNueva;
+
+}
+
+function restarIP(ip){
+  var bloques = ip.split(".");
+  var ipNueva= "";
+  var restado=false
+  for(var i = 4; i>1;i--){
+    if(!restado){
+      var bloqueActual = parseInt(bloques[i], 10);
+      if(bloqueActual>0){
+        bloqueActual-=1;
+        restado = true;
+      }else{
+        bloqueActual = 255;
+      }
+      bloques[i] = bloqueActual;
+    }
+   
+  }
+
+  for(var i =0; i<bloques.length-1;i++){
+    if(i==bloques.length-2){
+      ipNueva += bloques[i] +"";
+    }else{
+      ipNueva += bloques[i] +".";
+    }
+  }
+
+  return ipNueva;
+
+}
+
