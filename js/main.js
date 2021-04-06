@@ -162,6 +162,7 @@ function calculate() {
   } else {
     alert("invalid value");
   }
+  hallarDireccionRedHost();
 }
 
 function sumarIP(ip){
@@ -224,3 +225,128 @@ function restarIP(ip){
 
 }
 
+
+function calculatePunto2(){
+  var q1 = document.getElementById("q1").value;
+  var q2 = document.getElementById("q2").value;
+  var q3 = document.getElementById("q3").value;
+  var q4 = document.getElementById("q4").value;
+  var cidr = document.getElementById("cidr").value;
+
+  //validate input value
+  if (
+    q1 >= 0 &&
+    q1 <= 255 &&
+    q2 >= 0 &&
+    q2 <= 255 &&
+    q3 >= 0 &&
+    q3 <= 255 &&
+    q4 >= 0 &&
+    q4 <= 255 &&
+    cidr >= 0 &&
+    cidr <= 32
+  ) {
+
+    var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
+    var ipMascara = convertirIpBinDecimal(hallarMascara());
+    var rangeA = sumarIP(ipRed);
+    var numHost = 32 - cidr;
+    var canDirecciones = Math.pow(2, numHost) - 2;
+    var ipAsignada=rangeA;
+
+
+
+    //Listado de direcciones asignables
+    for(var i=1;i<=canDirecciones;i++){
+      lista = document.getElementById("lista");
+      listado = document.createElement("LI");
+      if(i!=1)
+        ipAsignada = sumarIP(ipAsignada);
+      ip = document.createTextNode(ipAsignada);
+      listado.appendChild(ip);
+      lista.appendChild(listado);
+    }
+
+    var broadcast = sumarIP(ipAsignada);
+    var rangeB = restarIP(broadcast);
+
+    
+
+  }else{
+    alert("Ip ingresada no válida");
+  }
+}
+
+function convertirIpBinDecimal(ip){
+  var ipString = "";
+  for(var i =1;i<=4;i++){
+    if(i!=4)
+      ipString += parseInt(ip[i], 2) + ".";
+    else
+     ipString += parseInt(ip[i], 2);
+  }
+
+  return ipString;
+}
+function hallarDireccionRedHost(){
+  var q1 = document.getElementById("q1").value;
+  var q2 = document.getElementById("q2").value;
+  var q3 = document.getElementById("q3").value;
+  var q4 = document.getElementById("q4").value;
+  var cidr = document.getElementById("cidr").value;
+
+
+  let ipBinario = {};
+  ipBinario[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
+  ipBinario[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
+  ipBinario[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
+  ipBinario[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
+  let mascara = hallarMascara(cidr);
+
+  var ipRed = {};
+  for(var i = 1;i<=4;i++){
+    
+    var auxIp="";
+    var arregloIp = ipBinario[i].split('');
+    var arregloMascara = mascara[i].split('');
+    var length = arregloIp.length;
+    for(var j =0;j<length;j++){
+      var resul = parseInt(arregloIp[j], 10) + parseInt(arregloMascara[j], 10)
+      if((resul) ==2){
+        auxIp += "1";
+      }else{
+        auxIp += "0";
+      }
+    }
+    ipRed[i] = auxIp;
+
+  }
+
+return ipRed;
+
+}
+function hallarMascara(mascara){
+  let mascaraBin = {};
+  let con=0;
+  let auxPos=1;
+  let octeto = "";
+  for(var i =1;i<=32;i++){
+    if(con==8){
+        mascaraBin[auxPos] = octeto;
+        con=0;
+        octeto = "";
+        auxPos++;
+      } 
+        if(i<=mascara){
+          octeto += "1";
+          con++;
+        }else{
+          octeto += "0";
+        }
+        
+        if(i==32){
+          mascaraBin[auxPos] = octeto;
+        }
+  }
+  return mascaraBin;
+}
