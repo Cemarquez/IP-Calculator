@@ -1,0 +1,367 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /** 1 rem = 10px*/
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Open-Sans', sans-serif;
+    font-size: 1.6rem;
+    /** 16px**/
+    line-height: 2;
+}
+
+
+/* Globales */
+
+.contenedor {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'PT Sans', sans-serif;
+}
+
+h1 {
+    font-size: 4.8rem;
+}
+
+h2 {
+    font-size: 4.0rem;
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: 3.2rem;
+}
+
+h4 {
+    font-size: 2.8rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/**Utilidades**/
+
+.centrar-texto {
+    text-align: center;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.centrar-columnas {
+    justify-content: center;
+}
+
+
+/**Botones**/
+
+.btn {
+    display: block;
+    text-align: center;
+    padding: 1rem 3rem;
+    margin: 2rem 0;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    flex: 0 0 100%;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn-primario {
+    background-color: #000000;
+}
+
+.btn-secundario {
+    background-color: #784D3C;
+}
+
+@media (min-width: 768px) {
+    .btn {
+        display: inline-block;
+        flex: 0 0 auto;
+    }
+}
+
+
+/** Grid **/
+
+@media (min-width:768px) {
+    .grid {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .columnas-4 {
+        flex: 0 0 calc(33.3% - 1rem);
+    }
+    .columnas-6 {
+        flex: 0 0 calc(50% - 1rem);
+    }
+    .columnas-8 {
+        flex: 0 0 calc(66.6% - 1rem);
+    }
+    .columnas-10 {
+        flex: 0 0 calc(83.3% - 1rem);
+    }
+    .columnas-12 {
+        flex: 0 0 100%;
+    }
+}
+
+.centrar-columnas {
+    justify-content: center;
+}
+
+
+/**Header**/
+
+@media (min-width: 768px) {
+    .barra {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.site-header {
+   /** background-image: url(../img/banner.jpg); */
+    background-color: chocolate;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 60rem;
+}
+
+.site-header a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.site-header h1 {
+    text-align: center;
+    font-weight: 400;
+}
+
+.site-header h1 span {
+    font-weight: 700;
+}
+
+.navegacion a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.8rem;
+    text-align: center;
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .navegacion a {
+        display: inline;
+        margin-right: 3rem;
+    }
+    .navegacion a:last-of-type {
+        margin-right: 0;
+    }
+}
+
+
+/**Texto Header**/
+
+.texto-header {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.texto-header p {
+    font-size: 2.2rem;
+}
+
+@media (min-width: 768px) {
+    .texto-header {
+        margin-top: 15rem;
+    }
+}
+
+.texto-header p {
+    font-size: 2.2rem;
+}
+
+
+/** Contenido Principal **/
+
+.contenido-principal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.blog,
+.cursos {
+    flex: 0 0 100%;
+}
+
+.cursos {
+    order: -1;
+}
+
+@media (min-width: 768px) {
+    .contenido-principal {
+        justify-content: space-between;
+    }
+    .blog {
+        flex-basis: calc(66.6% - 2rem);
+    }
+    .cursos {
+        flex-basis: calc(33.4% - 2rem);
+        order: 2;
+    }
+}
+
+
+/** Opcional **/
+
+.entrada-blog {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.entrada-blog:last-of-type {
+    border: none;
+}
+
+
+/**cursos**/
+
+.titulo-cursos {
+    text-align: center;
+    line-height: 1;
+}
+
+@media (min-width: 768px) {
+    .titulo-cursos {
+        text-align: left;
+        line-height: default;
+    }
+}
+
+.cursos-lista {
+    padding: 0;
+    list-style: none;
+}
+
+.curso {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #E1E1E1;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
+}
+
+.curso:last-of-type {
+    border: none;
+}
+
+.curso p {
+    font-size: 2rem;
+}
+
+.curso p span,
+.descripcion {
+    font-weight: 400;
+    font-size: 2rem;
+}
+
+@media (min-width: 768px) {
+    .curso {
+        border: none;
+    }
+}
+
+
+/**footer**/
+
+.site-footer {
+    background-color: #000000;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.site-footer p {
+    color: #ffffff;
+    font-size: 4rem;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+}
+
+.site-footer p span {
+    font-weight: 700;
+}
+
+.site-footer a {
+    text-decoration: none;
+}
+
+
+/**Contacto**/
+
+.formulario-contacto {
+    background-color: #FFFFFF;
+    padding: 5rem;
+}
+
+@media (min-width: 768px) {
+    .formulario-contacto {
+        margin-top: -10rem;
+    }
+}
+
+.formulario-contacto .campo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.formulario-contacto .campo label {
+    flex: 0 0 8rem;
+}
+
+.formulario-contacto .campo input:not([type="submit"]),
+.formulario-contacto textarea {
+    flex: 1;
+    border: 1px solid #e1e1e1;
+    padding: 1rem;
+}
+
+.formulario-contacto textarea {
+    height: 20rem;
+}
+
+.formulario-contacto .enviar {
+    display: flex;
+    justify-content: flex-end;
+}
