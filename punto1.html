@@ -1,74 +1,76 @@
 <!DOCTYPE html>
 <html
+<head>
+  <title>Calculadora IP</title>
+  <link rel="stylesheet" href="css/styleMenu.css" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <script src="https://kit.fontawesome.com/28b1447ae1.js" crossorigin="anonymous"></script>
+</head>
 
-  <header>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <nav class = "menu">
-      <ul>
-        <li><a class="inicio" href="index.html"><i class="fa fa-fw fa-home">
+<header class="site-header">
+  <div class="contenedor">
+      <div class="barra">
+          <a href="/">
+              <h1 class="no-margin">Calculadora<span> IP</span></h1>
+          </a>
+          <nav class="navegacion">
+              <a href="punto1.html">Punto 1</a>
+              <a href="punto2.html">Punto 2</a>
+              <a href="punto3.html">Punto 3</a>
+          </nav>
 
-        </i> </a>
-         
-        <li><a href="punto1.html">
-          Punto 1
-        </a></li>
+      </div>
+  </div>
+</header>
 
-        <li><a href="punto2.html">
-          Punto 2
-        </a></li>
-
-        <li><a href="punto3.html">
-          Punto 3
-        </a></li>
-      </ul>
-    </nav>
-  </header>
-  <head>
-    <title>Calculadora IP</title>
-    <link rel="stylesheet" href="css/estilos.css" type="text/css">
-  </head>
+ 
 
   <body>
-    <h1>Calculadora de direcciones IP</h1>
-    Direccion IP
-    <input type="text" class="addr" id="q1" value="192" /> .
-    <input type="text" class="addr" id="q2" value="168"/> .
-    <input type="text" class="addr" id="q3" value="10"/> .
-    <input type="text" class="addr" id="q4" value="14"/> /
-    <input type="text" class="addr" id="cidr" value="24"/>
-    <button  onclick='calculate();'>Calcular</button>
+    <div class="contenido-principal contenedor">
+      <h1>Punto número 1</h1>
+    </div>
+<div class="contenido-principal contenedor">
+  Direccion IP
+  <input type="text" class="addr" id="q1" value="192" /> .
+  <input type="text" class="addr" id="q2" value="168"/> .
+  <input type="text" class="addr" id="q3" value="10"/> .
+  <input type="text" class="addr" id="q4" value="14"/> /
+  <input type="text" class="addr" id="cidr" value="24"/>
+  <button class="botonCalcular" onclick='calculate();'>Calcular</button>
+</div>
+ 
 
     <hr>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Dirección IP :</span>
       <span class="value" id="resIP"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Máscara de subred :</span>
       <span class="value" id="resMask"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Número de bits para identificar la red:</span>
       <span class="value" id="resNumBitsRed"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Número de bits para identificar los hots:</span>
       <span class="value" id="resNumBitsHost"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Número de direcciones para asignar:</span>
       <span class="value" id="resNumDirecciones"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Direccion de red:</span>
       <span class="value" id="resNet"></span>
     </div>
   
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Rango de ips :</span>
       <span class="value" id="resRange"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor">
       <span class="label">Dirección Broadcast:</span>
       <span class="value" id="resBC"></span>
     </div>
