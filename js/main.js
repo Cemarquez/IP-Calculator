@@ -1,3 +1,5 @@
+var arrayTable = new Array();
+
 function calculate() {
   //get values from input box
   var q1 = document.getElementById("q1").value;
@@ -305,7 +307,7 @@ function hallarDireccionRedHost(){
 
   var ipRed = {};
   for(var i = 1;i<=4;i++){
-    
+
     var auxIp="";
     var arregloIp = ipBinario[i].split('');
     var arregloMascara = mascara[i].split('');
@@ -350,3 +352,82 @@ function hallarMascara(mascara){
   }
   return mascaraBin;
 }
+
+function calculatePunto3(){
+  var q1 = document.getElementById("q1").value;
+  var q2 = document.getElementById("q2").value;
+  var q3 = document.getElementById("q3").value;
+  var q4 = document.getElementById("q4").value;
+  var cidr = document.getElementById("cidr").value;
+  var numBits = document.getElementById("bits").value;
+
+  var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
+  var ipMascara = convertirIpBinDecimal(hallarMascara());
+  var numSubredes=0;
+
+  var aux =  32 - (parseInt(numBits,10) + parseInt(cidr, 10));
+  if(aux > 2){
+    numSubredes = Math.pow(2, numBits) -2;
+    
+  }
+  arrayTable.push(["# Subred","Dirección IP", "Rango", "Broadcast"]);
+  var cantidadHostXSubred=Math.pow(2, aux);
+  var auxIpR = ipRed;
+  var auxIp = ipRed;
+  var auxRA = auxIp;
+  var auxRB;
+  var auxBC;
+  for(var i =0;i<numSubredes+1;i++){
+    auxIpR = auxIp;
+    auxRA = sumarIP(auxIp);
+    for(var j =1;j<cantidadHostXSubred;j++){
+      auxIp = sumarIP(auxIp);
+    }
+    auxRB = restarIP(auxIp);
+    auxBC = auxIp
+    var d;
+    if(i!=0){
+      arrayTable.push(["Subred: " + (i), auxIpR, auxRA + " - " + auxRB, auxBC]);
+    }
+     
+
+    auxIp = sumarIP(auxIp);
+  }
+
+
+GenerateTable();
+
+}
+
+function GenerateTable() {
+  
+  var table = document.createElement("TABLE");
+  table.border = "1";
+
+  //Get the count of columns.
+  var columnCount = arrayTable[0].length;
+
+  //Add the header row.
+  var row = table.insertRow(-1);
+  for (var i = 0; i < columnCount; i++) {
+      var headerCell = document.createElement("TH");
+      headerCell.innerHTML = arrayTable[0][i];
+      row.appendChild(headerCell);
+  }
+
+  //Add the data rows.
+  for (var i = 1; i < arrayTable.length; i++) {
+      row = table.insertRow(-1);
+      for (var j = 0; j < columnCount; j++) {
+          var cell = row.insertCell(-1);
+          cell.innerHTML = arrayTable[i][j];
+      }
+  }
+
+  var dvTable = document.getElementById("dvTable");
+  dvTable.innerHTML = "";
+  dvTable.appendChild(table);
+}
+
+
+

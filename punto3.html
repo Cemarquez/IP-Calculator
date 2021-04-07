@@ -25,18 +25,19 @@
   </header>
   <head>
     <title>Calculadora IP</title>
-    <link rel="stylesheet" href="css/estilos.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
   </head>
 
   <body>
     <h1>Calculadora de direcciones IP</h1>
     Direccion IP
-    <input type="text" class="addr" id="q1" value="128" /> .
-    <input type="text" class="addr" id="q2" value="211"/> .
-    <input type="text" class="addr" id="q3" value="0"/> .
-    <input type="text" class="addr" id="q4" value="32"/> /
-    <input type="text" class="addr" id="cidr" value="28"/>
-    <button  onclick='calculatePunto2();'>Calcular</button>
+    <input type="text" class="addr" id="q1" value="195" /> .
+    <input type="text" class="addr" id="q2" value="50"/> .
+    <input type="text" class="addr" id="q3" value="100"/> .
+    <input type="text" class="addr" id="q4" value="0"/> /
+    <input type="text" class="addr" id="cidr" value="24"/>
+    <input type="text" class="addr" id="bits" value="3"/>
+    <button  onclick='calculatePunto3();'>Calcular</button>
 
     <hr>
     <div class="resultado">
@@ -73,17 +74,15 @@
       <span class="value" id="resBC"></span>
     </div>
 
+   
     <h2>
-      Listado de direcciones ips que se pueden asignar:
+      Tabla de subredes:
     </h2>
-    <ul class="lista" id = "lista">
-      
-    </ul>
-
+    
 
     
 
-
+    <div id="dvTable"></div>
     
     
     <script type="text/javascript" src="js/main.js"></script>
