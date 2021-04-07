@@ -21,7 +21,7 @@
     .contenedor {
         max-width: 1200px;
         width: 95%;
-        margin: 0;
+        margin: 0 auto;
     }
     
     h1,
@@ -206,7 +206,7 @@
     /** Contenido Principal **/
     
     .contenido-principal {
-        display: flex;
+       /* display: flex; */
         flex-wrap: wrap;
         margin-left: 3rem;
     }
@@ -373,6 +373,9 @@
         padding:6px 10px;
         text-decoration:none;
         text-shadow:0px -1px 0px #5b6178;
+        margin-left: 2rem;
+       
+        
     }
     .botonCalcular:hover {
         background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
@@ -380,6 +383,34 @@
     }
     .botonCalcular:active {
         position:relative;
+        
         top:1px;
+        
     }
     
+    /* Punto */
+
+    .punto  {
+        font-size: 3rem;
+    }
+
+    /* Slash */
+
+    .slash  {
+        font-size: 2rem;
+        
+    }
+
+    /* Direccion ip titulo */
+
+    .dir  {
+        margin-right: 2rem;
+        
+    }
+
+    .label {
+        display:inline-block;
+        width:320px;
+        background:rgb(245, 245, 245);
+        font-weight: bold;
+        }

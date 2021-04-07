@@ -151,6 +151,7 @@ function calculate() {
       listado.appendChild(ip);
       lista.appendChild(listado);
 
+
     for(var i = canDirecciones; i>1;i--){
       lista = document.getElementById("lista");
       listado = document.createElement("LI");
@@ -158,7 +159,14 @@ function calculate() {
       ip = document.createTextNode(ipAsignada);
       listado.appendChild(ip);
       lista.appendChild(listado);
+      if (i == i/3){
+        document.createElement("span id='dots'");
+        listado.appendChild("...") 
+        document.createElement("span id='more'"); 
+
+      }
     }
+    document.createElement("button onClick='btnVerMas' id='btnMas'");
  
  
   } else {
@@ -431,3 +439,19 @@ function GenerateTable() {
 
 
 
+//Boton ver mas 
+function verMas() {
+  
+  var moreText = document.getElementById("more");
+  var btnText = document.getElementById("btnVerMas");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more";
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less";
+    moreText.style.display = "inline";
+  }
+} 
