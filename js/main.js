@@ -1,5 +1,5 @@
 var arrayTable = new Array();
-
+var span = document.createElement('span');
 function calculate() {
   //get values from input box
   var q1 = document.getElementById("q1").value;
@@ -151,22 +151,61 @@ function calculate() {
       listado.appendChild(ip);
       lista.appendChild(listado);
 
-
+    var con = 0;
+   
     for(var i = canDirecciones; i>1;i--){
+      if (con<3){
       lista = document.getElementById("lista");
       listado = document.createElement("LI");
       ipAsignada = sumarIP(ipAsignada);
       ip = document.createTextNode(ipAsignada);
       listado.appendChild(ip);
       lista.appendChild(listado);
-      if (i == i/3){
-        document.createElement("span id='dots'");
-        listado.appendChild("...") 
-        document.createElement("span id='more'"); 
-
+      con++;
       }
+      if (con==3){
+       
+        //var puntos = document.createTextNode("...");
+        //puntos.id = "dots";
+        //listado = document.createElement("LI");
+        //listado.appendChild(puntos);
+        //lista.appendChild(listado);
+        
+        
+        span.style.display ='none';
+        span.id ='more';
+        
+        
+        lista.append(span);
+       
+        con++;
+      }
+      if (con>3){
+      //lista = document.getElementById("lista");
+      listado = document.createElement("LI");
+      ipAsignada = sumarIP(ipAsignada);
+      ip = document.createTextNode(ipAsignada);
+      listado.appendChild(ip);
+      //lista.appendChild(listado);
+      span.append(listado);
+      
+      }
+
+
+      
     }
-    document.createElement("button onClick='btnVerMas' id='btnMas'");
+
+    
+    
+
+
+   
+    
+        
+        
+
+   
+    
  
  
   } else {
@@ -174,6 +213,8 @@ function calculate() {
   }
   hallarDireccionRedHost();
 }
+
+
 
 function sumarIP(ip){
   var bloques = ip.split(".");
@@ -438,20 +479,27 @@ function GenerateTable() {
 }
 
 
-
+var  tocado = false;
 //Boton ver mas 
 function verMas() {
   
-  var moreText = document.getElementById("more");
-  var btnText = document.getElementById("btnVerMas");
+    console.log("aaaaaaaaaaaaaaaa")
+    
+    var button = document.getElementById("ver");
+    var txt =  button.textContent;
+    if (tocado==false){
 
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Read more";
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Read less";
-    moreText.style.display = "inline";
-  }
-} 
+      span.style.display ="inline" ;
+      button.textContent = "Ver menos";
+      tocado = true;
+
+
+    } else{
+      span.style.display ="none" ;
+      tocado =false;
+      button.textContent = "Ver mas";
+    }
+
+  
+
+}
