@@ -1,99 +1,110 @@
 <!DOCTYPE html>
-<html
-
-  <header>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <nav class = "menu">
-      <ul>
+<html <header>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<nav class="menu">
+    <ul>
         <li><a class="inicio" href="index.html"><i class="fa fa-fw fa-home">
 
         </i> </a>
-         
-        <li><a href="punto1.html">
+
+            <li><a href="punto1.html">
           Punto 1
         </a></li>
 
-        <li><a href="punto2.html">
+            <li><a href="punto2.html">
           Punto 2
         </a></li>
 
-        <li><a href="punto3.html">
+            <li><a href="punto3.html">
           Punto 3
         </a></li>
-      </ul>
-    </nav>
-  </header>
-  <head>
+    </ul>
+</nav>
+</header>
+
+<head>
     <title>Calculadora IP</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
-  </head>
+</head>
 
-  <body>
+<body>
     <h1>Calculadora de direcciones IP</h1>
     Direccion IP
     <input type="text" class="addr" id="q1" value="172" /> .
-    <input type="text" class="addr" id="q2" value="16"/> .
-    <input type="text" class="addr" id="q3" value="0"/> .
-    <input type="text" class="addr" id="q4" value="0"/> /
-    <input type="text" class="addr" id="cidr" value="16"/>
-    <input type="text" class="addr" id="bits" value="6"/>
-    <button  onclick='calculatePunto3();'>Calcular</button>
+    <input type="text" class="addr" id="q2" value="16" /> .
+    <input type="text" class="addr" id="q3" value="0" /> .
+    <input type="text" class="addr" id="q4" value="0" /> /
+    <input type="text" class="addr" id="cidr" value="16" />
+    <input type="text" class="addr" id="bits" value="6" />
+    <button onclick='calculatePunto3();'>Calcular</button>
 
     <hr>
     <div class="resultado">
-      <span class="label">Dirección IP :</span>
-      <span class="value" id="resIP"></span>
+        <span class="label">Dirección IP :</span>
+        <span class="value" id="resIP"></span>
     </div>
     <div class="resultado">
-      <span class="label">Máscara de subred :</span>
-      <span class="value" id="resMask"></span>
+        <span class="label">Máscara de subred :</span>
+        <span class="value" id="resMask"></span>
     </div>
     <div class="resultado">
-      <span class="label">Número de bits para identificar la red:</span>
-      <span class="value" id="resNumBitsRed"></span>
+        <span class="label">Número de bits para identificar la red:</span>
+        <span class="value" id="resNumBitsRed"></span>
     </div>
     <div class="resultado">
-      <span class="label">Número de bits para identificar los hots:</span>
-      <span class="value" id="resNumBitsHost"></span>
+        <span class="label">Número de bits para identificar los hots:</span>
+        <span class="value" id="resNumBitsHost"></span>
     </div>
     <div class="resultado">
-      <span class="label">Número de direcciones para asignar:</span>
-      <span class="value" id="resNumDirecciones"></span>
+        <span class="label">Número de direcciones para asignar:</span>
+        <span class="value" id="resNumDirecciones"></span>
     </div>
     <div class="resultado">
-      <span class="label">Direccion de red:</span>
-      <span class="value" id="resNet"></span>
-    </div>
-  
-    <div class="resultado">
-      <span class="label">Rango de ips :</span>
-      <span class="value" id="resRange"></span>
-    </div>
-    <div class="resultado">
-      <span class="label">Dirección Broadcast:</span>
-      <span class="value" id="resBC"></span>
+        <span class="label">Direccion de red:</span>
+        <span class="value" id="resNet"></span>
     </div>
 
+    <div class="resultado">
+        <span class="label">Rango de ips :</span>
+        <span class="value" id="resRange"></span>
+    </div>
+    <div class="resultado">
+        <span class="label">Dirección Broadcast:</span>
+        <span class="value" id="resBC"></span>
+    </div>
 
+    <span style="display: none" id="determinarSubred">
+    <div class="resultado">
+        <span class="label">Ubicar direccion IP:</span>
+    <input type="text" class="addr" id="numIP" placeholder="Ejm: 192.168.1.12" />
+    <button onclick="determinarSubred();"> Ubicar </button>
+    </div>
+    </span>
+
+    <div class="resultado">
+        <span class="label" style="display: none" id="ubicacionSubred">La IP esta en la subred: 
+        <span class="value" id="ubiIP"></span>
+        </span>
+    </div>
 
     <span style="display: none" id="buscarSubred">
     <div class="resultado">
       <span class="label">Ingrese numero de subred:</span>
-      <input type="text" class="addr" id="numSubred" placeholder="Ejm: 25" /> 
-      <button onclick="buscarSubred();"> Buscar </button>
+    <input type="text" class="addr" id="numSubred" placeholder="Ejm: 25" />
+    <button onclick="buscarSubred();"> Buscar </button>
     </div>
-  </span>
+    </span>
 
     <h2 id="tituloTabla">
-      Tabla de subredes:
+        Tabla de subredes:
     </h2>
-    
 
-    
+
+
 
     <div id="dvTable"></div>
-    
-    
+
+
     <br>
 
     <span style="display: none" id="buscarHost">
@@ -101,27 +112,28 @@
 
       
       <span class="label">Buscar numero de host :</span>
-      <input type="text" class="addr" id="numHost" placeholder="Ejm: 23"/>
-      <button onclick="buscarNumHost();"> Buscar </button>
-      
-     
+    <input type="text" class="addr" id="numHost" placeholder="Ejm: 23" />
+    <button onclick="buscarNumHost();"> Buscar </button>
+
+
     </div>
 
 
 
     <div class="resultado">
-    <span class="label"  style="display: none" id="tituloDirHost">Dirección de host: </span>
-    <span class="value" id="hostEncontrado"></span>
-    
-     </div>
+        <span class="label" style="display: none" id="tituloDirHost">Dirección de host: </span>
+        <span class="value" id="hostEncontrado"></span>
+
+    </div>
 
 
 
-  </span>
-    
+    </span>
+
 
     <script type="text/javascript" src="js/main.js"></script>
 
-   
-  </body>
+
+</body>
+
 </html>
