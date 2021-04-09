@@ -3,6 +3,8 @@ var span = document.createElement('span');
 var subredSeleccionada;
 
 function calculate() {
+    var verMas = document.getElementById("ver");
+    verMas.style.display = 'inline';
     //get values from input box
     var q1 = document.getElementById("q1").value;
     var q2 = document.getElementById("q2").value;
@@ -67,7 +69,7 @@ function calculate() {
                 maskBinaryBlock += "0";
             }
         }
-        //convert binary mask block to decimal
+        //con t binary mask block to decimal
         maskBlock = parseInt(maskBinaryBlock, 2);
 
         //net & broadcast addr
@@ -145,14 +147,18 @@ function calculate() {
         document.getElementById("resNumBitsHost").innerHTML = numHost;
         document.getElementById("resNumBitsRed").innerHTML = cidr;
         document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
-
+       
+        span.innerHTML="";
+        while (lista.firstChild) {
+           lista.removeChild(lista.firstChild);
+        }
         var ipAsignada = rangeA;
         lista = document.getElementById("lista");
         listado = document.createElement("LI");
         ip = document.createTextNode(ipAsignada);
         listado.appendChild(ip);
         lista.appendChild(listado);
-
+        lista = document.getElementById("lista");
         var con = 0;
 
         for (var i = canDirecciones; i > 1; i--) {
@@ -166,29 +172,16 @@ function calculate() {
                 con++;
             }
             if (con == 3) {
-
-                //var puntos = document.createTextNode("...");
-                //puntos.id = "dots";
-                //listado = document.createElement("LI");
-                //listado.appendChild(puntos);
-                //lista.appendChild(listado);
-
-
                 span.style.display = 'none';
                 span.id = 'more';
-
-
                 lista.append(span);
-
                 con++;
             }
             if (con > 3) {
-                //lista = document.getElementById("lista");
                 listado = document.createElement("LI");
                 ipAsignada = sumarIP(ipAsignada);
                 ip = document.createTextNode(ipAsignada);
                 listado.appendChild(ip);
-                //lista.appendChild(listado);
                 span.append(listado);
 
             }
@@ -213,7 +206,6 @@ function calculate() {
     } else {
         alert("invalid value");
     }
-    hallarDireccionRedHost();
 }
 
 
@@ -387,6 +379,29 @@ function hallarDireccionRedHost() {
 
 }
 
+var  tocado = false;
+//Boton ver mas 
+function verMas() {
+
+
+    var button = document.getElementById("ver");
+    var txt =  button.textContent;
+    if (tocado==false){
+
+      span.style.display ="inline" ;
+      button.textContent = "Ver menos";
+      tocado = true;
+
+//Boton buscar de la subred
+
+    } else{
+      span.style.display ="none" ;
+      tocado =false;
+      button.textContent = "Ver mas";
+    }
+
+}
+
 function hallarMascara(mascara) {
     let mascaraBin = {};
     let con = 0;
@@ -424,6 +439,13 @@ function calculatePunto3() {
     var spanDeterminarSubred = document.getElementById("determinarSubred");
     spanDeterminarSubred.style.display = 'inline';
 
+    var compararIp = document.getElementById("mismaRed");
+    compararIp.style.display = 'inline';
+
+    var tituloComparar = document.getElementById("tituloComparar");
+     tituloComparar.style.display = 'inline';
+
+   
     document.getElementById("tituloTabla").textContent = "Tabla de subredes:";
     arrayTable = new Array();
     var q1 = document.getElementById("q1").value;
@@ -509,8 +531,7 @@ var tocado = false;
 
 function buscarSubred() {
 
-
-
+    
 
     var copiaArray = new Array();
 
@@ -536,6 +557,8 @@ function buscarSubred() {
     var spanHost = document.getElementById("buscarHost");
     spanHost.style.display = 'inline';
 
+    var listaIp = document.getElementById("listaIP");
+    listaIp.style.display = 'inline';
 
 }
 
@@ -566,10 +589,39 @@ function determinarSubred() {
     var ubicacionSubred = document.getElementById("ubicacionSubred");
     ubicacionSubred.style.display = "inline";
     var ipObtenida = document.getElementById("numIP").value;
-    var inicioSubred = parseInt(document.getElementById("cidr").value, 10);
-    var finalSubred = inicioSubred + parseInt(document.getElementById("bits").value, 10);
-    var octetos = ipObtenida.split('.');
+    var mask = document.getElementById("cidr").value;
+    var numBits = document.getElementById("bits").value;
 
+    var numSubred = buscarSR(ipObtenida,mask,numBits);
+    document.getElementById("ubiIP").innerHTML = numSubred;
+}
+
+
+
+function compararHost(){
+ 
+    var ip1 = document.getElementById("ipHost1").value;
+    var ip2 = document.getElementById("ipHost2").value;
+    var mask = document.getElementById("cidr").value;
+    var numBits = document.getElementById("bits").value;
+
+    var numS1 =  buscarSR(ip1, mask,numBits  );
+    var numS2 =  buscarSR(ip2, mask,numBits  );
+
+    if(numS1 == numS2){
+        document.getElementById("respuesComparar").innerHTML = "Ambas IP's están en la subred: " + numS1;
+    }else{
+        document.getElementById("respuesComparar").innerHTML = "Las IP's ingresadas no pertencen a la misma subred";
+    }
+
+    
+}
+
+
+function buscarSR(ip, mask, numBits){
+    var inicioSubred = parseInt(mask, 10);
+    var finalSubred = inicioSubred + parseInt(numBits, 10);
+    var octetos = ip.split('.');
     let ipBinario = {};
     ipBinario[1] = String("00000000" + parseInt(octetos[0], 10).toString(2)).slice(-8);
     ipBinario[2] = String("00000000" + parseInt(octetos[1], 10).toString(2)).slice(-8);
@@ -579,5 +631,36 @@ function determinarSubred() {
     var binaria = ipBinario[1] + ipBinario[2] + ipBinario[3] + ipBinario[4] + "";
 
     var numSubred = parseInt(binaria.substring(inicioSubred, finalSubred), 2);
-    document.getElementById("ubiIP").innerHTML = numSubred;
+    console.log(numSubred);
+    return numSubred;
+
+}
+
+
+function mostrarHost(){
+    var numHost = document.getElementById("numHostMostrar").value;
+    var numSubred = document.getElementById("numSubred").value;
+
+    var ipAsignada = arrayTable[numSubred][1];
+    ipAsignada = sumarIP(ipAsignada);
+
+    numHost = parseInt(numHost, 10);
+    while (lista.firstChild) {
+        lista.removeChild(lista.firstChild);
+     }
+    for (var i = numHost; i >= 1; i--) {
+       
+            lista = document.getElementById("lista");
+            listado = document.createElement("LI");
+            ipAsignada = sumarIP(ipAsignada);
+            ip = document.createTextNode(ipAsignada);
+            listado.appendChild(ip);
+            lista.appendChild(listado);
+        
+    }
+
+
+
+    
+
 }

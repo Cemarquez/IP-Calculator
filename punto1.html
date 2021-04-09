@@ -2,8 +2,12 @@
 <html
 <head>
   <title>Calculadora IP</title>
+  <!--Icono Pestaña-->
+  <link rel="shortcut icon" href="src/logo_resonance.jpg">
   <link rel="stylesheet" href="css/styleMenu.css" type="text/css">
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/28b1447ae1.js" crossorigin="anonymous"></script>
 </head>
 
@@ -41,49 +45,50 @@
  
 
     <hr>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Dirección IP :</span>
       <span class="value" id="resIP"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Máscara de subred :</span>
       <span class="value" id="resMask"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Número de bits para identificar la red:</span>
       <span class="value" id="resNumBitsRed"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Número de bits para identificar los hosts:</span>
       <span class="value" id="resNumBitsHost"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Número de direcciones para asignar:</span>
       <span class="value" id="resNumDirecciones"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Direccion de red:</span>
       <span class="value" id="resNet"></span>
     </div>
   
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Rango de ips :</span>
       <span class="value" id="resRange"></span>
     </div>
-    <div class="contenido-principal contenedor">
+    <div class="contenido-principal contenedor1">
       <span class="label">Dirección Broadcast:</span>
       <span class="value" id="resBC"></span>
     </div>
 
-    <h2>
+    <h2 class="tituloListado">
       Listado de direcciones ips que se pueden asignar:
     </h2>
+    
     <ul class="lista" id = "lista">
       
     </ul>
 
     <div class="contenido-principal contenedor">
-      <button id="ver" onclick='verMas();'>Ver mas</button>
+      <button style="display: none" class="botonCalcular" id="ver" onclick='verMas();'>Ver mas</button>
     </div>
     
    
