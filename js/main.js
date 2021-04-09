@@ -5,6 +5,9 @@ var subredSeleccionada;
 function calculate() {
     var verMas = document.getElementById("ver");
     verMas.style.display = 'inline';
+
+    var tituloListado = document.getElementById("tituloListado");
+    tituloListado.style.display = 'inline';
     //get values from input box
     var q1 = document.getElementById("q1").value;
     var q2 = document.getElementById("q2").value;
