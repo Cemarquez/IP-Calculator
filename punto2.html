@@ -1,55 +1,60 @@
 <!DOCTYPE html>
 <html
 
-  <header>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <nav class = "menu">
-      <ul>
-        <li><a class="inicio" href="index.html"><i class="fa fa-fw fa-home">
+<head>
+  <title>Calculadora IP</title>
+  <!--Icono Pestaña-->
+  <link rel="shortcut icon" href="src/logo_resonance.jpg">
+  <link rel="stylesheet" href="css/styleMenu.css" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/28b1447ae1.js" crossorigin="anonymous"></script>
+</head>
 
-        </i> </a>
-         
-        <li><a href="punto1.html">
-          Punto 1
-        </a></li>
+<header class="site-header">
+  <div class="contenedor">
+      <div class="barra">
+          <a href="/">
+              <h1 class="no-margin">Calculadora<span> IP</span></h1>
+          </a>
+          <nav class="navegacion">
+              <a href="punto1.html">Punto 1</a>
+              <a href="punto2.html">Punto 2</a>
+              <a href="punto3.html">Punto 3</a>
+          </nav>
 
-        <li><a href="punto2.html">
-          Punto 2
-        </a></li>
-
-        <li><a href="punto3.html">
-          Punto 3
-        </a></li>
-      </ul>
-    </nav>
-  </header>
-  <head>
-    <title>Calculadora IP</title>
-    <link rel="stylesheet" href="css/estilos.css" type="text/css">
-  </head>
+      </div>
+  </div>
+</header>
 
   <body>
-    <h1>Calculadora de direcciones IP</h1>
-    Direccion IP
-    <input type="text" class="addr" id="q1" value="128" /> .
-    <input type="text" class="addr" id="q2" value="211"/> .
-    <input type="text" class="addr" id="q3" value="0"/> .
-    <input type="text" class="addr" id="q4" value="32"/> /
-    <input type="text" class="addr" id="cidr" value="28"/>
-    <button  onclick='calculatePunto2();'>Calcular</button>
+
+    <div class="contenido-principal contenedor">
+      <h1>Punto número 2</h1>
+    </div>
+    <div class="contenido-principal contenedor">
+      <span class="dir"><strong>Direccion IP </strong></span> 
+     <input type="text" class="addr" id="q1" value="192" /> <span class="punto">.</span>
+     <input type="text" class="addr" id="q2" value="168"/> <span class="punto">.</span>
+     <input type="text" class="addr" id="q3" value="10"/> <span class="punto">.</span>
+     <input type="text" class="addr" id="q4" value="14"/> <span class="slash">/</span>
+     <input type="text" class="addr" id="cidr" value="24"/>
+     <button class="botonCalcular" onclick='calculatePunto2();'>Calcular</button>
+   </div>
 
     <hr>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
       <span class="label">Dirección IP :</span>
       <span class="value" id="resIP"></span>
     </div>
 
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
       <span class="label">Direccion de red:</span>
       <span class="value" id="resNet"></span>
     </div>
 
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
       <span class="label">Dirección Broadcast:</span>
       <span class="value" id="resBC"></span>
     </div>
@@ -57,19 +62,20 @@
    
   
    
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
       <span class="label">Número de direcciones para asignar:</span>
       <span class="value" id="resNumDirecciones"></span>
     </div>
   
   
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
       <span class="label">Rango de ips :</span>
       <span class="value" id="resRange"></span>
     </div>
   
 
-    <h2>
+    <br>
+    <h2 style="display: none;" class="tituloListado" id="tituloListado">
       Listado de direcciones ips que se pueden asignar:
     </h2>
     <ul class="lista" id = "lista">
@@ -77,10 +83,10 @@
     </ul>
 
 
-    
+    <div class="contenido-principal contenedor">
+      <button style="display: none" class="botonCalcular" id="ver" onclick='verMas();'>Ver mas</button>
+    </div>
 
-
-    
     
     <script type="text/javascript" src="js/main.js"></script>
 

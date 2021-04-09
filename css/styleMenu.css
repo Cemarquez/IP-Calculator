@@ -448,6 +448,25 @@
         outline:none;
     }
 
+    .addr1{
+        width: 16rem;
+        padding: 5px;
+     font-size: 16px;
+     border-width: 1px;
+     border-color: #CCCCCC;
+     background-color: #FFFFFF;
+     color: #000000;
+     border-style: hidden;
+     border-radius: 10px;
+     box-shadow: 0px 0px 8px rgba(66,66,66,.60);
+     text-shadow: 0px 0px 0px rgba(66,66,66,.75);
+
+    }
+
+    .addr1:focus{
+        outline:none;
+    }
+
 
     .lista{
         margin-left: 3rem;

@@ -1,147 +1,143 @@
 <!DOCTYPE html>
-<html <header>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<nav class="menu">
-    <ul>
-        <li><a class="inicio" href="index.html"><i class="fa fa-fw fa-home">
-
-        </i> </a>
-
-            <li><a href="punto1.html">
-          Punto 1
-        </a></li>
-
-            <li><a href="punto2.html">
-          Punto 2
-        </a></li>
-
-            <li><a href="punto3.html">
-          Punto 3
-        </a></li>
-    </ul>
-</nav>
-</header>
-
+<html 
 <head>
     <title>Calculadora IP</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
+    <!--Icono Pestaña-->
+    <link rel="shortcut icon" href="src/logo_resonance.jpg">
+    <link rel="stylesheet" href="css/styleMenu.css" type="text/css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/28b1447ae1.js" crossorigin="anonymous"></script>
+  </head>
+  
+  <header class="site-header">
+    <div class="contenedor">
+        <div class="barra">
+            <a href="/">
+                <h1 class="no-margin">Calculadora<span> IP</span></h1>
+            </a>
+            <nav class="navegacion">
+                <a href="punto1.html">Punto 1</a>
+                <a href="punto2.html">Punto 2</a>
+                <a href="punto3.html">Punto 3</a>
+            </nav>
+  
+        </div>
+    </div>
+  </header>
 
 <body>
-    <h1>Calculadora de direcciones IP</h1>
-    Direccion IP
-    <input type="text" class="addr" id="q1" value="172" /> .
-    <input type="text" class="addr" id="q2" value="16" /> .
-    <input type="text" class="addr" id="q3" value="0" /> .
-    <input type="text" class="addr" id="q4" value="0" /> /
-    <input type="text" class="addr" id="cidr" value="16" />
-    <input type="text" class="addr" id="bits" value="6" />
-    <button onclick='calculatePunto3();'>Calcular</button>
+    <div class="contenido-principal contenedor">
+        <h1>Punto número 3</h1>
+      </div>
+
+      <div class="contenido-principal contenedor">
+        <span class="dir"><strong>Direccion IP </strong></span> 
+       <input type="text" class="addr" id="q1" value="192" /> <span class="punto">.</span>
+       <input type="text" class="addr" id="q2" value="168"/> <span class="punto">.</span>
+       <input type="text" class="addr" id="q3" value="10"/> <span class="punto">.</span>
+       <input type="text" class="addr" id="q4" value="14"/> <span class="slash">/</span>
+       <input type="text" class="addr" id="cidr" value="17"/>
+       <input type="text" class="addr" id="bits" value="6" />
+       <button class="botonCalcular" onclick='calculatePunto3();'>Calcular</button>
+     </div>
 
     <hr>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Dirección IP :</span>
         <span class="value" id="resIP"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Máscara de subred :</span>
         <span class="value" id="resMask"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Número de bits para identificar la red:</span>
         <span class="value" id="resNumBitsRed"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Número de bits para identificar los hots:</span>
         <span class="value" id="resNumBitsHost"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Número de direcciones para asignar:</span>
         <span class="value" id="resNumDirecciones"></span>
     </div>
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label">Direccion de red:</span>
         <span class="value" id="resNet"></span>
     </div>
 
-    <div class="resultado">
-        <span class="label">Rango de ips :</span>
-        <span class="value" id="resRange"></span>
-    </div>
-    <div class="resultado">
-        <span class="label">Dirección Broadcast:</span>
-        <span class="value" id="resBC"></span>
-    </div>
-
     <span style="display: none" id="determinarSubred">
-    <div class="resultado">
+        <div class="contenido-principal contenedor1">
         <span class="label">Ubicar direccion IP:</span>
-    <input type="text" class="addr" id="numIP" placeholder="Ejm: 192.168.1.12" />
-    <button onclick="determinarSubred();"> Ubicar </button>
+    <input type="text" class="addr1" id="numIP" placeholder="Ejm: 192.168.1.12" />
+    <button class="botonCalcular" onclick="determinarSubred();"> Ubicar </button>
     </div>
     </span>
 
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label" style="display: none" id="ubicacionSubred">La IP esta en la subred: 
         <span class="value" id="ubiIP"></span>
         </span>
     </div>
 
     <span style="display: none" id="buscarSubred">
-    <div class="resultado">
+        <div class="contenido-principal contenedor1">
       <span class="label">Ingrese numero de subred:</span>
-    <input type="text" class="addr" id="numSubred" placeholder="Ejm: 25" />
-    <button onclick="buscarSubred();"> Buscar </button>
+    <input type="text" class="addr1" id="numSubred" placeholder="Ejm: 25" />
+    <button class="botonCalcular" onclick="buscarSubred();"> Buscar </button>
     </div>
     </span>
 
     <span style="display: none" id="mismaRed">
-        <div class="resultado">
+        <div class="contenido-principal contenedor1">
     
           
         <span class="label">Comparar direcciones:</span>
-        <input type="text" class="addr" id="ipHost1" placeholder="Ejm: 192.168.1.3" />
-        <input type="text" class="addr" id="ipHost2" placeholder="Ejm: 192.168.1.6" />
-        <button onclick="compararHost();"> Comparar </button>
+        <input type="text" class="addr1" id="ipHost1" placeholder="Ejm: 192.168.1.3" />
+        <input type="text" class="addr1" id="ipHost2" placeholder="Ejm: 192.168.1.6" />
+        <button class="botonCalcular" onclick="compararHost();"> Comparar </button>
         </div>
     
     
-        <div class="resultado">
+        <div class="contenido-principal contenedor1">
             <span class="label" style="display: none" id="tituloComparar">  </span>
-            <span class="value" id="respuesComparar"></span>
+            <span class="label" id="respuesComparar"></span>
     
         </div>
     
     </span>
     
 
-
-    <h2 id="tituloTabla">
+    <br>
+    <h2 style="display: none;" class="tituloListado" id="tituloTabla">
         Tabla de subredes:
     </h2>
 
 
 
 
-    <div id="dvTable"></div>
+    <div class = "contenido-principal contenedor1" id="dvTable"></div>
 
 
     <br>
 
     <span style="display: none" id="buscarHost">
-    <div class="resultado">
+        <div class="contenido-principal contenedor1">
 
       
     <span class="label">Buscar numero de host :</span>
-    <input type="text" class="addr" id="numHost" placeholder="Ejm: 23" />
-    <button onclick="buscarNumHost();"> Buscar </button>
+    <input type="text" class="addr1" id="numHost" placeholder="Ejm: 23" />
+    <button class="botonCalcular" onclick="buscarNumHost();"> Buscar </button>
 
 
     </div>
 
 
 
-    <div class="resultado">
+    <div class="contenido-principal contenedor1">
         <span class="label" style="display: none" id="tituloDirHost">Dirección de host: </span>
         <span class="value" id="hostEncontrado"></span>
 
@@ -149,12 +145,12 @@
     </span>
 
     <span style="display: none" id="listaIP">
-        <div class="resultado">
+        <div class="contenido-principal contenedor1">
     
           
         <span class="label">Ingrese cantidad de hosts a mostrar:</span>
-        <input type="text" class="addr" id="numHostMostrar" placeholder="Ejm: 4" />
-        <button onclick="mostrarHost();"> Mostrar </button>
+        <input type="text" class="addr1" id="numHostMostrar" placeholder="Ejm: 4" />
+        <button class="botonCalcular" onclick="mostrarHost();"> Mostrar </button>
         </div>
     
     

@@ -275,6 +275,12 @@ function restarIP(ip) {
 
 
 function calculatePunto2() {
+    var verMas = document.getElementById("ver");
+    verMas.style.display = 'inline';
+
+    var tituloListado = document.getElementById("tituloListado");
+    tituloListado.style.display = 'inline';
+
     var q1 = document.getElementById("q1").value;
     var q2 = document.getElementById("q2").value;
     var q3 = document.getElementById("q3").value;
@@ -305,16 +311,41 @@ function calculatePunto2() {
 
 
         //Listado de direcciones asignables
-        for (var i = 1; i <= canDirecciones; i++) {
-            lista = document.getElementById("lista");
-            listado = document.createElement("LI");
-            if (i != 1)
-                ipAsignada = sumarIP(ipAsignada);
-            ip = document.createTextNode(ipAsignada);
-            listado.appendChild(ip);
-            lista.appendChild(listado);
+        span.innerHTML="";
+        while (lista.firstChild) {
+           lista.removeChild(lista.firstChild);
         }
 
+        var con = 0;
+
+        for (var i = canDirecciones; i > 1; i--) {
+            if (con < 3) {
+                lista = document.getElementById("lista");
+                listado = document.createElement("LI");
+                ipAsignada = sumarIP(ipAsignada);
+                ip = document.createTextNode(ipAsignada);
+                listado.appendChild(ip);
+                lista.appendChild(listado);
+                con++;
+            }
+            if (con == 3) {
+                span.style.display = 'none';
+                span.id = 'more';
+                lista.append(span);
+                con++;
+            }
+            if (con > 3) {
+                listado = document.createElement("LI");
+                ipAsignada = sumarIP(ipAsignada);
+                ip = document.createTextNode(ipAsignada);
+                listado.appendChild(ip);
+                span.append(listado);
+
+            }
+
+
+
+        }
         var broadcast = sumarIP(ipAsignada);
         var rangeB = restarIP(broadcast);
 
@@ -433,6 +464,9 @@ function hallarMascara(mascara) {
 }
 
 function calculatePunto3() {
+    var tituloListado = document.getElementById("tituloTabla");
+    tituloListado.style.display = 'inline';
+
     var spanHost = document.getElementById("buscarHost");
     spanHost.style.display = 'none';
     var ubicacionSubred = document.getElementById("ubicacionSubred");
@@ -490,6 +524,13 @@ function calculatePunto3() {
 
         auxIp = sumarIP(auxIp);
     }
+
+    document.getElementById("resIP").innerHTML = q1 + "." + q2 + "." + q3 + "." + q4; 
+    document.getElementById("resMask").innerHTML = ipMascara;
+    document.getElementById("resNumBitsRed").innerHTML = cidr;
+    document.getElementById("resNumBitsHost").innerHTML = 32 - (parseInt(numBits,10) + parseInt(cidr,10));
+    document.getElementById("resNumDirecciones").innerHTML = cantidadHostXSubred;
+    document.getElementById("resNet").innerHTML = ipRed;
 
 
     GenerateTable();
@@ -614,7 +655,7 @@ function compararHost(){
     if(numS1 == numS2){
         document.getElementById("respuesComparar").innerHTML = "Ambas IP's están en la subred: " + numS1;
     }else{
-        document.getElementById("respuesComparar").innerHTML = "Las IP's ingresadas no pertencen a la misma subred";
+        document.getElementById("respuesComparar").innerHTML = "Las IP's ingresadas no pertenecen a la misma subred";
     }
 
     
