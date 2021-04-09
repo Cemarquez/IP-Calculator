@@ -31,12 +31,12 @@
   <body>
     <h1>Calculadora de direcciones IP</h1>
     Direccion IP
-    <input type="text" class="addr" id="q1" value="195" /> .
-    <input type="text" class="addr" id="q2" value="50"/> .
-    <input type="text" class="addr" id="q3" value="100"/> .
+    <input type="text" class="addr" id="q1" value="172" /> .
+    <input type="text" class="addr" id="q2" value="16"/> .
+    <input type="text" class="addr" id="q3" value="0"/> .
     <input type="text" class="addr" id="q4" value="0"/> /
-    <input type="text" class="addr" id="cidr" value="24"/>
-    <input type="text" class="addr" id="bits" value="3"/>
+    <input type="text" class="addr" id="cidr" value="16"/>
+    <input type="text" class="addr" id="bits" value="6"/>
     <button  onclick='calculatePunto3();'>Calcular</button>
 
     <hr>
@@ -74,8 +74,17 @@
       <span class="value" id="resBC"></span>
     </div>
 
-   
-    <h2>
+
+
+    <span style="display: none" id="buscarSubred">
+    <div class="resultado">
+      <span class="label">Ingrese numero de subred:</span>
+      <input type="text" class="addr" id="numSubred" placeholder="Ejm: 25" /> 
+      <button onclick="buscarSubred();"> Buscar </button>
+    </div>
+  </span>
+
+    <h2 id="tituloTabla">
       Tabla de subredes:
     </h2>
     
@@ -85,6 +94,32 @@
     <div id="dvTable"></div>
     
     
+    <br>
+
+    <span style="display: none" id="buscarHost">
+    <div class="resultado">
+
+      
+      <span class="label">Buscar numero de host :</span>
+      <input type="text" class="addr" id="numHost" placeholder="Ejm: 23"/>
+      <button onclick="buscarNumHost();"> Buscar </button>
+      
+     
+    </div>
+
+
+
+    <div class="resultado">
+    <span class="label"  style="display: none" id="tituloDirHost">Dirección de host: </span>
+    <span class="value" id="hostEncontrado"></span>
+    
+     </div>
+
+
+
+  </span>
+    
+
     <script type="text/javascript" src="js/main.js"></script>
 
    

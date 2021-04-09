@@ -1,5 +1,6 @@
 var arrayTable = new Array();
 var span = document.createElement('span');
+var subredSeleccionada;
 function calculate() {
   //get values from input box
   var q1 = document.getElementById("q1").value;
@@ -321,6 +322,13 @@ function calculatePunto2(){
     var broadcast = sumarIP(ipAsignada);
     var rangeB = restarIP(broadcast);
 
+    document.getElementById("resIP").innerHTML = ipRed;
+    document.getElementById("resBC").innerHTML = broadcast;
+    document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
+    document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
+    document.getElementById("resNet").innerHTML = ipRed;
+   
+
     
 
   }else{
@@ -390,10 +398,11 @@ function hallarMascara(mascara){
       } 
         if(i<=mascara){
           octeto += "1";
-          con++;
+         
         }else{
           octeto += "0";
         }
+        con++;
         
         if(i==32){
           mascaraBin[auxPos] = octeto;
@@ -403,6 +412,12 @@ function hallarMascara(mascara){
 }
 
 function calculatePunto3(){
+  var spanHost = document.getElementById("buscarHost");
+  spanHost.style.display ='none';
+  var spanSubred= document.getElementById("buscarSubred");
+  spanSubred.style.display ='inline';
+  document.getElementById("tituloTabla").textContent = "Tabla de subredes:" ;
+  arrayTable = new Array();
   var q1 = document.getElementById("q1").value;
   var q2 = document.getElementById("q2").value;
   var q3 = document.getElementById("q3").value;
@@ -480,26 +495,62 @@ function GenerateTable() {
 
 
 var  tocado = false;
-//Boton ver mas 
-function verMas() {
-  
-    console.log("aaaaaaaaaaaaaaaa")
-    
-    var button = document.getElementById("ver");
-    var txt =  button.textContent;
-    if (tocado==false){
-
-      span.style.display ="inline" ;
-      button.textContent = "Ver menos";
-      tocado = true;
 
 
-    } else{
-      span.style.display ="none" ;
-      tocado =false;
-      button.textContent = "Ver mas";
-    }
+//Boton buscar de la subred
 
-  
+function buscarSubred(){
+
+
+
+
+  var copiaArray = new Array();
+
+  copiaArray.push(... arrayTable);
+
+  var numSub = document.getElementById("numSubred").value;
+
+  document.getElementById("tituloTabla").textContent = "Tabla de la subred # " + numSub+ ":" ;
+
+  subredSeleccionada = arrayTable[numSub];
+
+  arrayTable = new Array();
+  arrayTable.push(["# Subred","Dirección IP", "Rango", "Broadcast"]);
+
+ 
+
+  arrayTable.push(subredSeleccionada);
+
+  GenerateTable();
+
+  arrayTable = copiaArray;
+
+  var spanHost = document.getElementById("buscarHost");
+  spanHost.style.display ='inline';
+
 
 }
+
+
+
+function buscarNumHost(){
+
+  var tituloDirHost = document.getElementById("tituloDirHost");
+  tituloDirHost.style.display="inline";
+  var numRed = subredSeleccionada[1];
+  
+  var numHost =document.getElementById("numHost").value;
+  console.log(numHost);
+  console.log(parseInt(numHost,10));
+  console.log(parseInt(numHost,10) +1);
+
+  var numHostEncontrado = numRed;
+
+  for (var i=0; i<parseInt(numHost,10);i++){
+      numHostEncontrado = sumarIP(numHostEncontrado);
+  }
+
+  document.getElementById("hostEncontrado").innerHTML = numHostEncontrado;
+
+}
+
