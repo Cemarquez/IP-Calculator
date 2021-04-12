@@ -2,7 +2,15 @@ var arrayTable = new Array();
 var span = document.createElement('span');
 var subredSeleccionada;
 
+function generarNumeroRandom(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+
+
 function calculate() {
+    
     var verMas = document.getElementById("ver");
     verMas.style.display = 'inline';
 
@@ -53,7 +61,6 @@ function calculate() {
             standartClass = "D (Multicast Address)";
         } else if (q1 >= 240 && q1 <= 225) {
             standartClass = "E (Experimental)";
-        } else {
             standartClass = "Out of range";
         }
 
@@ -91,7 +98,6 @@ function calculate() {
         //put everything together, create a string container variables
         var mask = "";
         var maskBinary = "";
-        var net = "";
         var bc = "";
         var netBinary = "";
         var bcBinary = "";
@@ -105,7 +111,6 @@ function calculate() {
                 maskBinary += "11111111";
                 netBinary += ipBin[i];
                 bcBinary += ipBin[i];
-                net += parseInt(ipBin[i], 2);
                 bc += parseInt(ipBin[i], 2);
             } else if (importantBlock == i) {
                 //the important block.
@@ -113,7 +118,6 @@ function calculate() {
                 maskBinary += maskBinaryBlock;
                 netBinary += netBlockBinary;
                 bcBinary += bcBlockBinary;
-                net += parseInt(netBlockBinary, 2);
                 bc += parseInt(bcBlockBinary, 2);
             } else {
                 //block after the important block.
@@ -121,7 +125,6 @@ function calculate() {
                 maskBinary += "00000000";
                 netBinary += "00000000";
                 bcBinary += "11111111";
-                net += "0";
                 bc += "255";
             }
             //add . separator except the last block
@@ -130,11 +133,10 @@ function calculate() {
                 maskBinary += ".";
                 netBinary += ".";
                 bcBinary += ".";
-                net += ".";
                 bc += ".";
             }
         }
-
+        net = convertirIpBinDecimal(hallarDireccionRedHost());
         rangeA = sumarIP(net);
         rangeB = restarIP(bc);
 
@@ -188,29 +190,85 @@ function calculate() {
                 span.append(listado);
 
             }
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     } else {
         alert("invalid value");
     }
 }
 
+function hallarDireccionRedHost() {
+    var q1 = document.getElementById("q1").value;
+    var q2 = document.getElementById("q2").value;
+    var q3 = document.getElementById("q3").value;
+    var q4 = document.getElementById("q4").value;
+    var cidr = document.getElementById("cidr").value;
+
+
+    let ipBinario = {};
+    ipBinario[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
+    ipBinario[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
+    ipBinario[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
+    ipBinario[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
+    let mascara = hallarMascara(cidr);
+
+    var ipRed = {};
+    for (var i = 1; i <= 4; i++) {
+
+        var auxIp = "";
+        var arregloIp = ipBinario[i].split('');
+        var arregloMascara = mascara[i].split('');
+        var length = arregloIp.length;
+        for (var j = 0; j < length; j++) {
+            var resul = parseInt(arregloIp[j], 10) + parseInt(arregloMascara[j], 10)
+            if ((resul) == 2) {
+                auxIp += "1";
+            } else {
+                auxIp += "0";
+            }
+        }
+        ipRed[i] = auxIp;
+
+    }
+
+    return ipRed;
+
+}
+
+function hallarDireccionRedRandom(ip, cidr) {
+    var ipSplit = ip.split('.');
+    q1 = ipSplit[0];
+    q2 = ipSplit[1];
+    q3 = ipSplit[2];
+    q4 = ipSplit[3];
+    let ipBinario = {};
+    ipBinario[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
+    ipBinario[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
+    ipBinario[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
+    ipBinario[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
+    let mascara = hallarMascara(cidr);
+
+    var ipRed = {};
+    for (var i = 1; i <= 4; i++) {
+
+        var auxIp = "";
+        var arregloIp = ipBinario[i].split('');
+        var arregloMascara = mascara[i].split('');
+        var length = arregloIp.length;
+        for (var j = 0; j < length; j++) {
+            var resul = parseInt(arregloIp[j], 10) + parseInt(arregloMascara[j], 10)
+            if ((resul) == 2) {
+                auxIp += "1";
+            } else {
+                auxIp += "0";
+            }
+        }
+        ipRed[i] = auxIp;
+
+    }
+
+    return ipRed;
+
+}
 
 
 function sumarIP(ip) {
@@ -349,7 +407,7 @@ function calculatePunto2() {
         var broadcast = sumarIP(ipAsignada);
         var rangeB = restarIP(broadcast);
 
-        document.getElementById("resIP").innerHTML = ipRed;
+        document.getElementById("resIP").innerHTML = q1 + "." +q2 + "." + q3 + "." + q4;
         document.getElementById("resBC").innerHTML = broadcast;
         document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
         document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
@@ -376,43 +434,7 @@ function convertirIpBinDecimal(ip) {
     return ipString;
 }
 
-function hallarDireccionRedHost() {
-    var q1 = document.getElementById("q1").value;
-    var q2 = document.getElementById("q2").value;
-    var q3 = document.getElementById("q3").value;
-    var q4 = document.getElementById("q4").value;
-    var cidr = document.getElementById("cidr").value;
 
-
-    let ipBinario = {};
-    ipBinario[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
-    ipBinario[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
-    ipBinario[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
-    ipBinario[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
-    let mascara = hallarMascara(cidr);
-
-    var ipRed = {};
-    for (var i = 1; i <= 4; i++) {
-
-        var auxIp = "";
-        var arregloIp = ipBinario[i].split('');
-        var arregloMascara = mascara[i].split('');
-        var length = arregloIp.length;
-        for (var j = 0; j < length; j++) {
-            var resul = parseInt(arregloIp[j], 10) + parseInt(arregloMascara[j], 10)
-            if ((resul) == 2) {
-                auxIp += "1";
-            } else {
-                auxIp += "0";
-            }
-        }
-        ipRed[i] = auxIp;
-
-    }
-
-    return ipRed;
-
-}
 
 var  tocado = false;
 //Boton ver mas 
@@ -496,7 +518,6 @@ function calculatePunto3() {
     var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
     var ipMascara = convertirIpBinDecimal(hallarMascara(cidr));
     var numSubredes = 0;
-    console.log(ipMascara);
 
     var aux = 32 - (parseInt(numBits, 10) + parseInt(cidr, 10));
     if (aux > 2) {
@@ -617,9 +638,6 @@ function buscarNumHost() {
     var numRed = subredSeleccionada[1];
 
     var numHost = document.getElementById("numHost").value;
-    console.log(numHost);
-    console.log(parseInt(numHost, 10));
-    console.log(parseInt(numHost, 10) + 1);
 
     var numHostEncontrado = numRed;
 
@@ -677,7 +695,6 @@ function buscarSR(ip, mask, numBits){
     var binaria = ipBinario[1] + ipBinario[2] + ipBinario[3] + ipBinario[4] + "";
 
     var numSubred = parseInt(binaria.substring(inicioSubred, finalSubred), 2);
-    console.log(numSubred);
     return numSubred;
 
 }
