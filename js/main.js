@@ -372,6 +372,7 @@ function convertirIpBinDecimal(ip) {
             ipString += parseInt(ip[i], 2);
     }
 
+
     return ipString;
 }
 
@@ -493,8 +494,9 @@ function calculatePunto3() {
     var numBits = document.getElementById("bits").value;
 
     var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
-    var ipMascara = convertirIpBinDecimal(hallarMascara());
+    var ipMascara = convertirIpBinDecimal(hallarMascara(cidr));
     var numSubredes = 0;
+    console.log(ipMascara);
 
     var aux = 32 - (parseInt(numBits, 10) + parseInt(cidr, 10));
     if (aux > 2) {
