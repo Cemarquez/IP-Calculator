@@ -723,7 +723,53 @@ function mostrarHost(){
     }
 
 
-
+    function generarRandomPunto1(){
+        var mascaraRandom = generarNumeroRandom(16, 29);
+    
+        var ipRandom = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255));
+        ipRandom = hallarDireccionRedRandom(ipRandom, mascaraRandom);
+        ipRandom = convertirIpBinDecimal(ipRandom);
+        var ipS = ipRandom.split('.');
+        document.getElementById("q1").value = ipS[0];
+        document.getElementById("q2").value = ipS[1];
+        document.getElementById("q3").value = ipS[2];
+        document.getElementById("q4").value = ipS[3];
+        document.getElementById("cidr").value = mascaraRandom;
+    
+      }
+    
+    
+    function generarRandomPunto2(){
+        
+        var mascaraRandom = generarNumeroRandom(16, 29);
+        var ipRandom = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255));
+        var ipS = ipRandom.split('.');
+        document.getElementById("q1").value = ipS[0];
+        document.getElementById("q2").value = ipS[1];
+        document.getElementById("q3").value = ipS[2];
+        document.getElementById("q4").value = ipS[3];
+        document.getElementById("cidr").value = mascaraRandom
+    
+    }
+    
+    function generarRandomPunto3(){
+        var mascaraRandom = generarNumeroRandom(16, 28);
+    
+        var ipRandom = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255));
+        ipRandom = hallarDireccionRedRandom(ipRandom, mascaraRandom);
+        ipRandom = convertirIpBinDecimal(ipRandom);
+        var ipS = ipRandom.split('.');
+    
+        
+        document.getElementById("q1").value = ipS[0];
+        document.getElementById("q2").value = ipS[1];
+        document.getElementById("q3").value = ipS[2];
+        document.getElementById("q4").value = ipS[3];
+        document.getElementById("cidr").value = mascaraRandom;
+        document.getElementById("bits").value = 30 - generarNumeroRandom(mascaraRandom, 28);
+    
+    
+    }
     
 
 }
