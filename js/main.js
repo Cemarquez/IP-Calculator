@@ -11,20 +11,24 @@ function generarNumeroRandom(min, max) {
 
 function calculate() {
     
-    var verMas = document.getElementById("ver");
-    verMas.style.display = 'inline';
-
-    var tituloListado = document.getElementById("tituloListado");
-    tituloListado.style.display = 'inline';
-    //get values from input box
+   
+    //obtiene valores de los input de la direccion ip
     var q1 = document.getElementById("q1").value;
     var q2 = document.getElementById("q2").value;
     var q3 = document.getElementById("q3").value;
     var q4 = document.getElementById("q4").value;
     var cidr = document.getElementById("cidr").value;
 
-    //validate input value
-    if (
+    
+    //validar input de los campos de direccion
+    if(q1 === "" || q2 === "" || q3 === "" || q3 === "" || q4 === "" || cidr === ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Faltan campos por ingresar!',
+          })
+
+    }else if (
         q1 >= 0 &&
         q1 <= 255 &&
         q2 >= 0 &&
@@ -36,35 +40,24 @@ function calculate() {
         cidr >= 0 &&
         cidr <= 32
     ) {
-        //display IP address
-        document.getElementById("resIP").innerHTML =
-            q1 + "." + q2 + "." + q3 + "." + q4;
+        var verMas = document.getElementById("ver");
+        verMas.style.display = 'inline';
+    
+        var tituloListado = document.getElementById("tituloListado");
+        tituloListado.style.display = 'inline';
 
-        //get IP Address binaries
+   
+
+        //conversion de ip a binario
         var ipBin = {};
         ipBin[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
         ipBin[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
         ipBin[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
         ipBin[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
 
-        //decide standart class
-        var standartClass = "";
-        if (q1 <= 126) {
-            standartClass = "A";
-        } else if (q1 == 127) {
-            standartClass = "loopback IP";
-        } else if (q1 >= 128 && q1 <= 191) {
-            standartClass = "B";
-        } else if (q1 >= 192 && q1 <= 223) {
-            standartClass = "C";
-        } else if (q1 >= 224 && q1 <= 239) {
-            standartClass = "D (Multicast Address)";
-        } else if (q1 >= 240 && q1 <= 225) {
-            standartClass = "E (Experimental)";
-            standartClass = "Out of range";
-        }
+      
 
-        //netmask
+        //mascara de red
         var mask = cidr;
         var importantBlock = Math.ceil(mask / 8);
         var importantBlockBinary = ipBin[importantBlock];
@@ -79,10 +72,10 @@ function calculate() {
                 maskBinaryBlock += "0";
             }
         }
-        //con t binary mask block to decimal
+        //mascara binario a decimal
         maskBlock = parseInt(maskBinaryBlock, 2);
 
-        //net & broadcast addr
+        //broadcast 
         var netBlockBinary = "";
         var bcBlockBinary = "";
         for (var i = 1; i <= 8; i++) {
@@ -95,7 +88,7 @@ function calculate() {
             }
         }
 
-        //put everything together, create a string container variables
+       
         var mask = "";
         var maskBinary = "";
         var bc = "";
@@ -103,31 +96,31 @@ function calculate() {
         var bcBinary = "";
         var rangeA = "";
         var rangeB = "";
-        //loop to put whole strings block together
+       
         for (var i = 1; i <= 4; i++) {
             if (importantBlock > i) {
-                //blocks before the important block.
+               
                 mask += "255";
                 maskBinary += "11111111";
                 netBinary += ipBin[i];
                 bcBinary += ipBin[i];
                 bc += parseInt(ipBin[i], 2);
             } else if (importantBlock == i) {
-                //the important block.
+                
                 mask += maskBlock;
                 maskBinary += maskBinaryBlock;
                 netBinary += netBlockBinary;
                 bcBinary += bcBlockBinary;
                 bc += parseInt(bcBlockBinary, 2);
             } else {
-                //block after the important block.
+               
                 mask += 0;
                 maskBinary += "00000000";
                 netBinary += "00000000";
                 bcBinary += "11111111";
                 bc += "255";
             }
-            //add . separator except the last block
+            //agrega . separador excepto en el ultimo octecto
             if (i < 4) {
                 mask += ".";
                 maskBinary += ".";
@@ -144,7 +137,7 @@ function calculate() {
         //Numero de bits para encontrar los hosts
         var numHost = 32 - cidr;
         var canDirecciones = Math.pow(2, numHost) - 2;
-        //write the results to the page.
+        //escribe los resultados en la pagina
         document.getElementById("resMask").innerHTML = mask;
         document.getElementById("resBC").innerHTML = bc;
         document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
@@ -191,9 +184,7 @@ function calculate() {
 
             }
         }
-    } else {
-        alert("invalid value");
-    }
+    } 
 }
 
 function hallarDireccionRedHost() {
@@ -333,20 +324,22 @@ function restarIP(ip) {
 
 
 function calculatePunto2() {
-    var verMas = document.getElementById("ver");
-    verMas.style.display = 'inline';
-
-    var tituloListado = document.getElementById("tituloListado");
-    tituloListado.style.display = 'inline';
-
+  
     var q1 = document.getElementById("q1").value;
     var q2 = document.getElementById("q2").value;
     var q3 = document.getElementById("q3").value;
     var q4 = document.getElementById("q4").value;
     var cidr = document.getElementById("cidr").value;
 
-    //validate input value
-    if (
+    //validar input de los campos de direccion
+    if(q1 === "" || q2 === "" || q3 === "" || q3 === "" || q4 === "" || cidr === ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Faltan campos por ingresar!',
+          })
+
+    }else if (
         q1 >= 0 &&
         q1 <= 255 &&
         q2 >= 0 &&
@@ -358,7 +351,13 @@ function calculatePunto2() {
         cidr >= 0 &&
         cidr <= 32
     ) {
+        var verMas = document.getElementById("ver");
+        verMas.style.display = 'inline';
+    
+        var tituloListado = document.getElementById("tituloListado");
+        tituloListado.style.display = 'inline';
 
+        
         var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
         var ipMascara = convertirIpBinDecimal(hallarMascara());
         var rangeA = sumarIP(ipRed);
@@ -487,6 +486,24 @@ function hallarMascara(mascara) {
 }
 
 function calculatePunto3() {
+    var q1 = document.getElementById("q1").value;
+    var q2 = document.getElementById("q2").value;
+    var q3 = document.getElementById("q3").value;
+    var q4 = document.getElementById("q4").value;
+    var cidr = document.getElementById("cidr").value;
+    var numBits = document.getElementById("bits").value;
+
+    
+    //validar input de los campos de direccion
+    if(q1 === "" || q2 === "" || q3 === "" || q3 === "" || q4 === "" || cidr === "" || numBits === ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Faltan campos por ingresar!',
+          })
+
+    }else{
+    
     var tituloListado = document.getElementById("tituloTabla");
     tituloListado.style.display = 'inline';
 
@@ -508,13 +525,7 @@ function calculatePunto3() {
    
     document.getElementById("tituloTabla").textContent = "Tabla de subredes:";
     arrayTable = new Array();
-    var q1 = document.getElementById("q1").value;
-    var q2 = document.getElementById("q2").value;
-    var q3 = document.getElementById("q3").value;
-    var q4 = document.getElementById("q4").value;
-    var cidr = document.getElementById("cidr").value;
-    var numBits = document.getElementById("bits").value;
-
+   
     var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
     var ipMascara = convertirIpBinDecimal(hallarMascara(cidr));
     var numSubredes = 0;
@@ -560,23 +571,30 @@ function calculatePunto3() {
 
 }
 
+}
+
 function GenerateTable() {
 
     var table = document.createElement("TABLE");
-    table.border = "1";
+    
 
-    //Get the count of columns.
+    
+    table.border = "1";
+    
+
+    //Obtiene numero de columnas
     var columnCount = arrayTable[0].length;
 
-    //Add the header row.
+    //Agrega encbezado en la fila
     var row = table.insertRow(-1);
     for (var i = 0; i < columnCount; i++) {
         var headerCell = document.createElement("TH");
+        
         headerCell.innerHTML = arrayTable[0][i];
         row.appendChild(headerCell);
     }
 
-    //Add the data rows.
+    //Agrega información de la fila
     for (var i = 1; i < arrayTable.length; i++) {
         row = table.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
@@ -591,11 +609,11 @@ function GenerateTable() {
 }
 
 
-var tocado = false;
+
 
 
 //Boton buscar de la subred
-
+var tocado = false;
 function buscarSubred() {
 
     
@@ -742,7 +760,7 @@ function generarRandomPunto1(){
 
 function generarRandomPunto2(){
     
-    var mascaraRandom = generarNumeroRandom(16, 29);
+    var mascaraRandom = generarNumeroRandom(22, 29);
     var ipRandom = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255));
     var ipS = ipRandom.split('.');
     document.getElementById("q1").value = ipS[0];
