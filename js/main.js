@@ -577,7 +577,7 @@ function GenerateTable() {
 
     var table = document.createElement("TABLE");
     
-
+    table.setAttribute("class", "minimalistBlack");
     
     table.border = "1";
     
