@@ -138,6 +138,7 @@ function calculate() {
         var numHost = 32 - cidr;
         var canDirecciones = Math.pow(2, numHost) - 2;
         //escribe los resultados en la pagina
+        document.getElementById("resIP").innerHTML = q1+"."+q2+"."+q3+"."+q4;
         document.getElementById("resMask").innerHTML = mask;
         document.getElementById("resBC").innerHTML = bc;
         document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
@@ -372,10 +373,14 @@ function calculatePunto2() {
         while (lista.firstChild) {
            lista.removeChild(lista.firstChild);
         }
+        lista = document.getElementById("lista");
+        listado = document.createElement("LI");
+        ip = document.createTextNode(ipAsignada);
+        listado.appendChild(ip);
+        lista.appendChild(listado);
 
         var con = 0;
-
-        for (var i = canDirecciones; i > 1; i--) {
+        for (var i = canDirecciones; i > 2; i--) {
             if (con < 3) {
                 lista = document.getElementById("lista");
                 listado = document.createElement("LI");
