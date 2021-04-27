@@ -45,122 +45,138 @@ function calculate() {
     
         var tituloListado = document.getElementById("tituloListado");
         tituloListado.style.display = 'inline';
-
-   
-
-        //conversion de ip a binario
-        var ipBin = {};
-        ipBin[1] = String("00000000" + parseInt(q1, 10).toString(2)).slice(-8);
-        ipBin[2] = String("00000000" + parseInt(q2, 10).toString(2)).slice(-8);
-        ipBin[3] = String("00000000" + parseInt(q3, 10).toString(2)).slice(-8);
-        ipBin[4] = String("00000000" + parseInt(q4, 10).toString(2)).slice(-8);
-
-      
-
-        //mascara de red
-        var mask = cidr;
-        var importantBlock = Math.ceil(mask / 8);
-        var importantBlockBinary = ipBin[importantBlock];
-        var maskBinaryBlockCount = mask % 8;
-        if (maskBinaryBlockCount == 0) importantBlock++;
-        var maskBinaryBlock = "";
-        var maskBlock = "";
-        for (var i = 1; i <= 8; i++) {
-            if (maskBinaryBlockCount >= i) {
-                maskBinaryBlock += "1";
-            } else {
-                maskBinaryBlock += "0";
-            }
-        }
-        //mascara binario a decimal
-        maskBlock = parseInt(maskBinaryBlock, 2);
-
-        //broadcast 
-        var netBlockBinary = "";
-        var bcBlockBinary = "";
-        for (var i = 1; i <= 8; i++) {
-            if (maskBinaryBlock.substr(i - 1, 1) == "1") {
-                netBlockBinary += importantBlockBinary.substr(i - 1, 1);
-                bcBlockBinary += importantBlockBinary.substr(i - 1, 1);
-            } else {
-                netBlockBinary += "0";
-                bcBlockBinary += "1";
-            }
-        }
+    
 
        
         var mask = "";
-        var maskBinary = "";
-        var bc = "";
-        var netBinary = "";
-        var bcBinary = "";
         var rangeA = "";
         var rangeB = "";
        
-        for (var i = 1; i <= 4; i++) {
-            if (importantBlock > i) {
-               
-                mask += "255";
-                maskBinary += "11111111";
-                netBinary += ipBin[i];
-                bcBinary += ipBin[i];
-                bc += parseInt(ipBin[i], 2);
-            } else if (importantBlock == i) {
-                
-                mask += maskBlock;
-                maskBinary += maskBinaryBlock;
-                netBinary += netBlockBinary;
-                bcBinary += bcBlockBinary;
-                bc += parseInt(bcBlockBinary, 2);
-            } else {
-               
-                mask += 0;
-                maskBinary += "00000000";
-                netBinary += "00000000";
-                bcBinary += "11111111";
-                bc += "255";
-            }
-            //agrega . separador excepto en el ultimo octecto
-            if (i < 4) {
-                mask += ".";
-                maskBinary += ".";
-                netBinary += ".";
-                bcBinary += ".";
-                bc += ".";
-            }
-        }
         net = convertirIpBinDecimal(hallarDireccionRedHost());
         rangeA = sumarIP(net);
-        rangeB = restarIP(bc);
 
 
-        //Numero de bits para encontrar los hosts
+       mask = convertirIpBinDecimal(hallarMascara(cidr)); 
+       //Numero de bits para encontrar los hosts
         var numHost = 32 - cidr;
         var canDirecciones = Math.pow(2, numHost) - 2;
-        //escribe los resultados en la pagina
-        document.getElementById("resIP").innerHTML = q1+"."+q2+"."+q3+"."+q4;
-        document.getElementById("resMask").innerHTML = mask;
-        document.getElementById("resBC").innerHTML = bc;
-        document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
-        document.getElementById("resNet").innerHTML = net;
-        document.getElementById("resNumBitsHost").innerHTML = numHost;
-        document.getElementById("resNumBitsRed").innerHTML = cidr;
-        document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
-       
+        var ipAsignada = rangeA;
+
+         //Listado de direcciones asignables
+         span.innerHTML="";
+         while (lista.firstChild) {
+            lista.removeChild(lista.firstChild);
+         }
+         lista = document.getElementById("lista");
+         listado = document.createElement("LI");
+         ip = document.createTextNode(ipAsignada);
+         listado.appendChild(ip);
+         lista.appendChild(listado);
+ 
+         var con = 0;
+         for (var i = canDirecciones; i > 2; i--) {
+             if (con < 3) {
+                 lista = document.getElementById("lista");
+                 listado = document.createElement("LI");
+                 ipAsignada = sumarIP(ipAsignada);
+                 ip = document.createTextNode(ipAsignada);
+                 listado.appendChild(ip);
+                 lista.appendChild(listado);
+                 con++;
+             }
+             if (con == 3) {
+                 span.style.display = 'none';
+                 span.id = 'more';
+                 lista.append(span);
+                 con++;
+             }
+             if (con > 3) {
+                 listado = document.createElement("LI");
+                 ipAsignada = sumarIP(ipAsignada);
+                 ip = document.createTextNode(ipAsignada);
+                 listado.appendChild(ip);
+                 span.append(listado);
+ 
+             }
+ 
+ 
+ 
+         }
+         var rangeB = ipAsignada;
+         var broadcast = sumarIP(ipAsignada);
+        
+         //escribe los resultados en la pagina
+         document.getElementById("resIP").innerHTML = q1+"."+q2+"."+q3+"."+q4;
+         document.getElementById("resMask").innerHTML = mask;
+         document.getElementById("resBC").innerHTML = broadcast;
+         document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
+         document.getElementById("resNet").innerHTML = net;
+         document.getElementById("resNumBitsHost").innerHTML = numHost;
+         document.getElementById("resNumBitsRed").innerHTML = cidr;
+         document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
+
+
+    } 
+}
+
+
+
+function calculatePunto2() {
+  
+    var q1 = document.getElementById("q1").value;
+    var q2 = document.getElementById("q2").value;
+    var q3 = document.getElementById("q3").value;
+    var q4 = document.getElementById("q4").value;
+    var cidr = document.getElementById("cidr").value;
+
+    //validar input de los campos de direccion
+    if(q1 === "" || q2 === "" || q3 === "" || q3 === "" || q4 === "" || cidr === ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Faltan campos por ingresar!',
+          })
+
+    }else if (
+        q1 >= 0 &&
+        q1 <= 255 &&
+        q2 >= 0 &&
+        q2 <= 255 &&
+        q3 >= 0 &&
+        q3 <= 255 &&
+        q4 >= 0 &&
+        q4 <= 255 &&
+        cidr >= 0 &&
+        cidr <= 32
+    ) {
+        var verMas = document.getElementById("ver");
+        verMas.style.display = 'inline';
+    
+        var tituloListado = document.getElementById("tituloListado");
+        tituloListado.style.display = 'inline';
+
+        
+        var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
+        var rangeA = sumarIP(ipRed);
+        var numHost = 32 - cidr;
+        var canDirecciones = Math.pow(2, numHost) - 2;
+        var ipAsignada = rangeA;
+
+
+
+        //Listado de direcciones asignables
         span.innerHTML="";
         while (lista.firstChild) {
            lista.removeChild(lista.firstChild);
         }
-        var ipAsignada = rangeA;
         lista = document.getElementById("lista");
         listado = document.createElement("LI");
         ip = document.createTextNode(ipAsignada);
         listado.appendChild(ip);
         lista.appendChild(listado);
-        lista = document.getElementById("lista");
-        var con = 0;
 
-        for (var i = canDirecciones; i > 1; i--) {
+        var con = 0;
+        for (var i = canDirecciones; i > 2; i--) {
             if (con < 3) {
                 lista = document.getElementById("lista");
                 listado = document.createElement("LI");
@@ -184,8 +200,26 @@ function calculate() {
                 span.append(listado);
 
             }
+
+
+
         }
-    } 
+        var rangeB = ipAsignada;
+        var broadcast = sumarIP(ipAsignada);
+     
+
+        document.getElementById("resIP").innerHTML = q1 + "." +q2 + "." + q3 + "." + q4;
+        document.getElementById("resBC").innerHTML = broadcast;
+        document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
+        document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
+        document.getElementById("resNet").innerHTML = ipRed;
+
+
+
+
+    } else {
+        alert("Ip ingresada no válida");
+    }
 }
 
 function hallarDireccionRedHost() {
@@ -263,6 +297,7 @@ function hallarDireccionRedRandom(ip, cidr) {
 }
 
 
+
 function sumarIP(ip) {
     var bloques = ip.split(".");
     var ipNueva = "";
@@ -321,108 +356,6 @@ function restarIP(ip) {
 
     return ipNueva;
 
-}
-
-
-function calculatePunto2() {
-  
-    var q1 = document.getElementById("q1").value;
-    var q2 = document.getElementById("q2").value;
-    var q3 = document.getElementById("q3").value;
-    var q4 = document.getElementById("q4").value;
-    var cidr = document.getElementById("cidr").value;
-
-    //validar input de los campos de direccion
-    if(q1 === "" || q2 === "" || q3 === "" || q3 === "" || q4 === "" || cidr === ""){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Faltan campos por ingresar!',
-          })
-
-    }else if (
-        q1 >= 0 &&
-        q1 <= 255 &&
-        q2 >= 0 &&
-        q2 <= 255 &&
-        q3 >= 0 &&
-        q3 <= 255 &&
-        q4 >= 0 &&
-        q4 <= 255 &&
-        cidr >= 0 &&
-        cidr <= 32
-    ) {
-        var verMas = document.getElementById("ver");
-        verMas.style.display = 'inline';
-    
-        var tituloListado = document.getElementById("tituloListado");
-        tituloListado.style.display = 'inline';
-
-        
-        var ipRed = convertirIpBinDecimal(hallarDireccionRedHost());
-        var ipMascara = convertirIpBinDecimal(hallarMascara());
-        var rangeA = sumarIP(ipRed);
-        var numHost = 32 - cidr;
-        var canDirecciones = Math.pow(2, numHost) - 2;
-        var ipAsignada = rangeA;
-
-
-
-        //Listado de direcciones asignables
-        span.innerHTML="";
-        while (lista.firstChild) {
-           lista.removeChild(lista.firstChild);
-        }
-        lista = document.getElementById("lista");
-        listado = document.createElement("LI");
-        ip = document.createTextNode(ipAsignada);
-        listado.appendChild(ip);
-        lista.appendChild(listado);
-
-        var con = 0;
-        for (var i = canDirecciones; i > 2; i--) {
-            if (con < 3) {
-                lista = document.getElementById("lista");
-                listado = document.createElement("LI");
-                ipAsignada = sumarIP(ipAsignada);
-                ip = document.createTextNode(ipAsignada);
-                listado.appendChild(ip);
-                lista.appendChild(listado);
-                con++;
-            }
-            if (con == 3) {
-                span.style.display = 'none';
-                span.id = 'more';
-                lista.append(span);
-                con++;
-            }
-            if (con > 3) {
-                listado = document.createElement("LI");
-                ipAsignada = sumarIP(ipAsignada);
-                ip = document.createTextNode(ipAsignada);
-                listado.appendChild(ip);
-                span.append(listado);
-
-            }
-
-
-
-        }
-        var broadcast = sumarIP(ipAsignada);
-        var rangeB = restarIP(broadcast);
-
-        document.getElementById("resIP").innerHTML = q1 + "." +q2 + "." + q3 + "." + q4;
-        document.getElementById("resBC").innerHTML = broadcast;
-        document.getElementById("resNumDirecciones").innerHTML = canDirecciones;
-        document.getElementById("resRange").innerHTML = rangeA + " - " + rangeB;
-        document.getElementById("resNet").innerHTML = ipRed;
-
-
-
-
-    } else {
-        alert("Ip ingresada no válida");
-    }
 }
 
 function convertirIpBinDecimal(ip) {
@@ -554,8 +487,7 @@ function calculatePunto3() {
             auxIp = sumarIP(auxIp);
         }
         auxRB = restarIP(auxIp);
-        auxBC = auxIp
-        var d;
+        auxBC = auxIp;
         if (i != 0) {
             arrayTable.push(["Subred: " + (i), auxIpR, auxRA + " - " + auxRB, auxBC]);
         }
@@ -722,7 +654,6 @@ function buscarSR(ip, mask, numBits){
 
 }
 
-
 function mostrarHost(){
     var numHost = document.getElementById("numHostMostrar").value;
     var numSubred = document.getElementById("numSubred").value;
@@ -772,7 +703,7 @@ function generarRandomPunto2(){
     document.getElementById("q2").value = ipS[1];
     document.getElementById("q3").value = ipS[2];
     document.getElementById("q4").value = ipS[3];
-    document.getElementById("cidr").value = mascaraRandom
+    document.getElementById("cidr").value = mascaraRandom;
 
 }
 
