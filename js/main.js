@@ -56,7 +56,7 @@ function calculate() {
         rangeA = sumarIP(net);
 
 
-       mask = convertirIpBinDecimal(hallarMascara(cidr)); 
+        mask = convertirIpBinDecimal(hallarMascara(cidr)); 
        //Numero de bits para encontrar los hosts
         var numHost = 32 - cidr;
         var canDirecciones = Math.pow(2, numHost) - 2;
@@ -98,10 +98,9 @@ function calculate() {
                  span.append(listado);
  
              }
- 
- 
- 
          }
+
+         
          var rangeB = ipAsignada;
          var broadcast = sumarIP(ipAsignada);
         
@@ -358,6 +357,7 @@ function restarIP(ip) {
 
 }
 
+// Convierte direccion binaria a decimal 
 function convertirIpBinDecimal(ip) {
     var ipString = "";
     for (var i = 1; i <= 4; i++) {
@@ -473,14 +473,15 @@ function calculatePunto3() {
         numSubredes = Math.pow(2, numBits) - 2;
 
     }
+
     arrayTable.push(["# Subred", "Dirección IP", "Rango", "Broadcast"]);
-    var cantidadHostXSubred = Math.pow(2, aux);
+    var cantidadHostXSubred = Math.pow(2, aux) - 2;
     var auxIpR = ipRed;
     var auxIp = ipRed;
     var auxRA = auxIp;
     var auxRB;
     var auxBC;
-    for (var i = 0; i < numSubredes + 1; i++) {
+    for (var i = 0; i < numSubredes + 2; i++) {
         auxIpR = auxIp;
         auxRA = sumarIP(auxIp);
         for (var j = 1; j < cantidadHostXSubred; j++) {
@@ -488,7 +489,7 @@ function calculatePunto3() {
         }
         auxRB = restarIP(auxIp);
         auxBC = auxIp;
-        if (i != 0) {
+        if (i != 0 && i!=numSubredes+1) {
             arrayTable.push(["Subred: " + (i), auxIpR, auxRA + " - " + auxRB, auxBC]);
         }
 
@@ -502,6 +503,7 @@ function calculatePunto3() {
     document.getElementById("resNumBitsHost").innerHTML = 32 - (parseInt(numBits,10) + parseInt(cidr,10));
     document.getElementById("resNumDirecciones").innerHTML = cantidadHostXSubred;
     document.getElementById("resNet").innerHTML = ipRed;
+    document.getElementById("resBC").innerHTML = auxBC;
 
 
     GenerateTable();
@@ -590,17 +592,34 @@ function buscarNumHost() {
 
     var tituloDirHost = document.getElementById("tituloDirHost");
     tituloDirHost.style.display = "inline";
+    var numBits = document.getElementById("bits").value;
+    var cidr = document.getElementById("cidr").value;
     var numRed = subredSeleccionada[1];
-
     var numHost = document.getElementById("numHost").value;
-
     var numHostEncontrado = numRed;
+
+    
+    
+    var aux = 32 - (parseInt(numBits, 10) + parseInt(cidr, 10));
+    var cantidadHostXSubred = Math.pow(2, aux) -2;
+
+    if (parseInt(numHost,10)<=cantidadHostXSubred){
+
 
     for (var i = 0; i < parseInt(numHost, 10); i++) {
         numHostEncontrado = sumarIP(numHostEncontrado);
     }
+    
+     document.getElementById("hostEncontrado").innerHTML = numHostEncontrado;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ingrese numero de host valido' ,
+          })
+    }
 
-    document.getElementById("hostEncontrado").innerHTML = numHostEncontrado;
+
 
 }
 
@@ -611,7 +630,13 @@ function determinarSubred() {
     var mask = document.getElementById("cidr").value;
     var numBits = document.getElementById("bits").value;
 
+
+    
+
     var numSubred = buscarSR(ipObtenida,mask,numBits);
+
+
+
     document.getElementById("ubiIP").innerHTML = numSubred;
 }
 
@@ -650,7 +675,12 @@ function buscarSR(ip, mask, numBits){
     var binaria = ipBinario[1] + ipBinario[2] + ipBinario[3] + ipBinario[4] + "";
 
     var numSubred = parseInt(binaria.substring(inicioSubred, finalSubred), 2);
-    return numSubred;
+
+    if (numSubred == 0){
+        return 0;
+    }
+
+    return numSubred +1;
 
 }
 
@@ -665,6 +695,15 @@ function mostrarHost(){
     while (lista.firstChild) {
         lista.removeChild(lista.firstChild);
      }
+
+
+     var numBits = document.getElementById("bits").value;
+     var cidr = document.getElementById("cidr").value;
+     var aux = 32 - (parseInt(numBits, 10) + parseInt(cidr, 10));
+     var cantidadHostXSubred = Math.pow(2, aux) -2;
+ 
+     if (parseInt(numHost,10)<=cantidadHostXSubred){
+
     for (var i = numHost; i >= 1; i--) {
        
             lista = document.getElementById("lista");
@@ -674,6 +713,13 @@ function mostrarHost(){
             listado.appendChild(ip);
             lista.appendChild(listado);
         
+    }
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ingrese numero de host valido' ,
+          })
     }
 
 }
@@ -692,7 +738,6 @@ function generarRandomPunto1(){
     document.getElementById("cidr").value = mascaraRandom;
 
   }
-
 
 function generarRandomPunto2(){
     
