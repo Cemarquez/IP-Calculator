@@ -486,7 +486,7 @@ function calculatePunto3() {
         var con=0;
         auxIpR = auxIp;
         auxRA = sumarIP(auxIp);
-        for (var j = 0; j < cantidadHostXSubred; j++) {
+        for (var j = 0; j <= cantidadHostXSubred; j++) {
             
             auxIp = sumarIP(auxIp);
             con++;
@@ -497,7 +497,6 @@ function calculatePunto3() {
             arrayTable.push(["Subred: " + (i), auxIpR, auxRA + " - " + auxRB, auxBC]);
         }
 
-        console.log(con)
         auxIp = sumarIP(auxIp);
         
     }
@@ -684,7 +683,7 @@ function buscarSR(ip, mask, numBits){
         return 0;
     }
 
-    return numSubred +1;
+    return numSubred;
 
 }
 
