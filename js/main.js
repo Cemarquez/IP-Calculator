@@ -481,11 +481,15 @@ function calculatePunto3() {
     var auxRA = auxIp;
     var auxRB;
     var auxBC;
+    
     for (var i = 0; i < numSubredes + 2; i++) {
+        var con=0;
         auxIpR = auxIp;
         auxRA = sumarIP(auxIp);
-        for (var j = 1; j < cantidadHostXSubred; j++) {
+        for (var j = 0; j < cantidadHostXSubred; j++) {
+            
             auxIp = sumarIP(auxIp);
+            con++;
         }
         auxRB = restarIP(auxIp);
         auxBC = auxIp;
@@ -493,10 +497,10 @@ function calculatePunto3() {
             arrayTable.push(["Subred: " + (i), auxIpR, auxRA + " - " + auxRB, auxBC]);
         }
 
-
+        console.log(con)
         auxIp = sumarIP(auxIp);
+        
     }
-
     document.getElementById("resIP").innerHTML = q1 + "." + q2 + "." + q3 + "." + q4; 
     document.getElementById("resMask").innerHTML = ipMascara;
     document.getElementById("resNumBitsRed").innerHTML = cidr;
