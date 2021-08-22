@@ -9,7 +9,13 @@
     *:after {
         box-sizing: inherit;
     }
-    
+    #redirectionIndex{
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 48px;
+    }
+
+
     body {
         font-family: 'Open-Sans', sans-serif;
         font-size: 1.6rem;

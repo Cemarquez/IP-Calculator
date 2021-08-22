@@ -4,38 +4,44 @@
 <head>
     <title>Calculadora IP</title>
     <!--Icono Pestaña-->
-  <link rel="shortcut icon" href="src/logo_resonance.jpg">
+    <link rel="shortcut icon" href="src/logo_resonance.jpg">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/normalize.css">
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/lang.js"></script>
     <script src="https://kit.fontawesome.com/28b1447ae1.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </head>
 
 <header class="site-header">
     <div class="contenedor">
         <div class="barra">
-            <a href="/">
-                <h1 class="no-margin">Calculadora<span> IP</span></h1>
+            <a id="redirectionIndex" onclick="redireccion()">
+                <h1 class="no-margin">Calculadora IP </h1>
             </a>
             <nav class="navegacion">
-                <a href="punto1.html">Punto 1</a>
-                <a href="punto2.html">Punto 2</a>
-                <a href="punto3.html">Punto 3</a>
+                <a id="redirectionP1" href="punto1.html" onclick="redireccionP1()">Punto 1</a>
+                <a id="redirectionP2"  href="punto2.html" onclick="redireccionP2()">Punto 2</a>
+                <a id="redirectionP3" href="punto3.html" onclick="redireccionP3()">Punto 3</a>
             </nav>
 
         </div>
         <div class="texto-header">
-            <h2 class="no-margin">La mejor calculadora IPv4 </h2>
-            <p class="no-margin">Calcula direcciones de IP para hosts y red</p>
+            <h2 id ="description1" class="no-margin">La mejor calculadora IPv4 </h2>
+            <p id ="description2" class="no-margin">Calcula direcciones de IP para hosts y red</p>
         </div>
     </div>
 </header>
 
-
-<script type="text/javascript" src="js/main.js"></script>
 <div class="contenido-principal contenedor">
     <main class="blog">
 
-        <h2>Desarrollado por:</h2>
+        <h2 id="developedby">Desarrollado por:</h2>
 
         <article class="curso grid">
             <div class="columnas-4">
@@ -44,7 +50,7 @@
             <div class="columnas-8">
 
                 <h4 class="no-margin">Brian David Giraldo Páez</h4>
-                <p class="no-margin">Correo: <span>briand.giraldop@uqvirtual.edu.co</span></p>
+                <p class="no-margin">Email: <span>briand.giraldop@uqvirtual.edu.co</span></p>
                 <a href="https://github.com/BrianGiraldo0" target="_blank">
                     <i class="fab fa-github fa-5x"></i>
                 </a>
@@ -58,7 +64,7 @@
             <div class="columnas-8">
 
                 <h4 class="no-margin">Cesar Esteban Marquez Meneses</h4>
-                <p class="no-margin">Correo: <span>cesare.marquezm@uqvirtual.edu.co</span></p>
+                <p class="no-margin">Email: <span>cesare.marquezm@uqvirtual.edu.co</span></p>
                 <a href="https://github.com/Cemarquez" target="_blank">
                     <i class="fab fa-github fa-5x"></i>
                 </a>
@@ -71,7 +77,7 @@
             <div class="columnas-8">
 
                 <h4 class="no-margin">Esteban Sanchez Carranza</h4>
-                <p class="no-margin">Correo: <span>esteban.sanchezc@uqvirtual.edu.co</span></p>
+                <p class="no-margin">Email: <span>esteban.sanchezc@uqvirtual.edu.co</span></p>
                 <a href="https://github.com/esteban180sx" target="_blank">
                     <i class="fab fa-github fa-5x"></i>
                 </a>
@@ -82,29 +88,51 @@
 
     </main>
     <aside class="cursos">
-        <h2 class="titulo-cursos">Información</h2>
+        <h2 id="information" class="titulo-cursos">Información</h2>
         <ul class="cursos-lista">
             <li class="curso">
-                <h4 class="no-margin">Punto 1</h4>
-                <h5 class="no-margin">Calcula la dirección ip de una red y la mascara de subred </h5>
-                <a href="punto1.html" class="btn btn-secundario"> Ir a...</a>
+                <h4 id="point1" class="no-margin">Punto 1</h4>
+                <h5 id="descriptionp1" class="no-margin">Calcula la dirección ip de una red y la mascara de subred </h5>
+                <a id="goto1" href="punto1.html" onclick="redireccionP1()" class="btn btn-secundario"> Ir a...</a>
 
             </li>
             <li class="curso">
-                <h4 class="no-margin">Punto 2</h4>
-                <h5 class="no-margin">Calcula la dirección ip de un host y la mascara de subred</h5>
-                <a href="punto2.html" class="btn btn-secundario"> Ir a...</a>
+                <h4 id="point2" class="no-margin">Punto 2</h4>
+                <h5 id="descriptionp2" class="no-margin">Calcula la dirección ip de un host y la mascara de subred</h5>
+                <a id="goto2" href="punto2.html" onclick="redireccionP2()" class="btn btn-secundario"> Ir a...</a>
             </li>
             <li class="curso">
-                <h4 class="no-margin">Punto 3</h4>
-                <h5 class="no-margin">Identifica las subredes de una dirección ip con su mascara de subred</h5>
-                <a href="punto3.html" class="btn btn-secundario"> Ir a...</a>
+                <h4 id="point3" class="no-margin">Punto 3</h4>
+                <h5 id="descriptionp3" class="no-margin">Identifica las subredes de una dirección ip con su mascara de subred</h5>
+                <a id="goto3" href="punto3.html" onclick="redireccionP3()" class="btn btn-secundario"> Ir a...</a>
 
             </li>
         </ul>
 
     </aside>
 </div>
+
+<div id="footer" class="footer mt-5">
+    
+    <div class="py-4 bg-light">
+        <div class="justify-content-center" >
+            <div class="col-10" >
+                <i class="fas fa-globe-americas"></i>
+                <a href="?lang=ES" onclick="setLangES()">Spanish</a>
+            
+                <i class="fas fa-globe-americas"></i>
+                <a href="?lang=EN" onclick="setLangEN()">English</a> 
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </body>
+
+
+
+
 
 </html>
